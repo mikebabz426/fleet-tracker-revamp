@@ -3,6 +3,13 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Box, Typography } from "@material-ui/core"
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginButton from "../components/LoginButton"
+import Main from "../components/Main"
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
+
+const client = new ApolloClient({
+  uri: "https://bright-sawfish-99.hasura.app/v1/graphql",
+  cache: new InMemoryCache(),
+})
 
 const useStyles = makeStyles(theme => ({
   messageBox: {
@@ -19,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 const App = () => {
   const classes = useStyles()
-  const { isLoading, isAuthenticated, error } = useAuth0()
+  const { isLoading, isAuthenticated, error, user } = useAuth0()
 
   isLoading ? (
     <Box>
@@ -33,14 +40,12 @@ const App = () => {
     </Box>
   ) : null
 
+  console.log(user)
+
   return (
-    <>
-      {isAuthenticated ? (
-        <Box className={classes.messageBox}>
-          <Typography variant="h3" className={classes.message}>
-            This is the protected Application Page!
-          </Typography>
-        </Box>
+    <ApolloProvider client={client}>
+      {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
+        <Main />
       ) : (
         <Box className={classes.messageBox}>
           <Typography variant="h3" className={classes.message}>
@@ -49,7 +54,7 @@ const App = () => {
           <LoginButton />
         </Box>
       )}
-    </>
+    </ApolloProvider>
   )
 }
 

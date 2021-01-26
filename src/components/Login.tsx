@@ -1,27 +1,35 @@
 import React from "react"
 import { Typography, Box, Container } from "@material-ui/core"
-
 import { makeStyles } from "@material-ui/core/styles"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
+import LoginButton from "./LoginButton"
 
 const useStyles = makeStyles(theme => ({
-  grid: {
-    marginTop: "10rem",
-  },
-
-  subheading: {
-    fontWeight: 300,
-    paddingLeft: "10px",
-  },
-  buttonContainer: {
+  container: {
+    display: "flex",
+    height: "89vh",
+    width: "100vw",
+    margin: 0,
     alignItems: "center",
-    minWidth: "300px",
-    margin: "2rem .5rem",
+    justifyContent: "space-center",
+  },
+  subheading: {
+    width: 400,
+    margin: "2rem 5rem",
+    fontWeight: 300,
+    textAlign: "center",
+  },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
-    width: 800,
-    height: 600,
+    height: "100vh",
+    width: "50vw",
+    borderRadius: "50% 0 0 50%",
   },
 }))
 
@@ -30,7 +38,7 @@ const Login = () => {
     {
       volvo: file(relativePath: { eq: "volvo.jpg" }) {
         childImageSharp {
-          fluid {
+          fluid(quality: 100) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -42,10 +50,17 @@ const Login = () => {
   const classes = useStyles()
 
   return (
-    <Container>
-      <Typography variant="h4" className={classes.subheading}>
-        Inspirational message to motivate dispatchers to get off their asses
-      </Typography>
+    <Container className={classes.container}>
+      <Box className={classes.box}>
+        <Typography variant="h4" className={classes.subheading}>
+          "Roads? Where we're going, we dont need... roads."
+          <br></br>
+          <span style={{ fontStyle: "italic", fontSize: "18px" }}>
+            -Emmett Lathrop "Doc" Brown, Ph. D.
+          </span>
+        </Typography>
+        <LoginButton />
+      </Box>
       <Box>
         <Img fluid={volvo} className={classes.image} />
       </Box>

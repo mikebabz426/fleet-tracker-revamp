@@ -1,15 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import { CssBaseline } from "@material-ui/core"
 import PropTypes from "prop-types"
 import Header from "./Header"
 import "@fontsource/roboto"
 import GlobalThemeProvider from "../GlobalThemeProvider"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, margin }) => {
+  const [addTruck, setAddTruck] = useState(false)
+
   return (
     <GlobalThemeProvider>
       <CssBaseline>
-        <Header />
+        <Header
+          margin={margin}
+          addTruck={e => setAddTruck(!addTruck)}
+          addTruckState={addTruck}
+        />
         {children}
       </CssBaseline>
     </GlobalThemeProvider>

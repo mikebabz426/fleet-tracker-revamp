@@ -9,7 +9,6 @@ import {
 import { FilterContext } from "../../FilterContext"
 import TableHeader from "./TableHeader"
 import TruckRow from "./TruckRow"
-import CssBaseline from "@material-ui/core/CssBaseline"
 
 const FleetTable = props => {
   const [filters] = useContext(FilterContext)
@@ -40,14 +39,12 @@ const FleetTable = props => {
     })
 
   return (
-    <CssBaseline>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHeader />
-          <TableBody>{filteredTrucks}</TableBody>
-        </Table>
-      </TableContainer>
-    </CssBaseline>
+    <TableContainer component={Paper}>
+      <Table aria-label="customized table">
+        <TableHeader />
+        <TableBody>{filteredTrucks}</TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 

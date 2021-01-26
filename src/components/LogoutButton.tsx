@@ -6,6 +6,10 @@ import { makeStyles } from "@material-ui/styles"
 const useStyles = makeStyles(theme => ({
   root: {
     margin: "1rem",
+    backgroundColor: "#fff",
+    "&:hover": {
+      backgroundColor: "#e57373",
+    },
   },
 }))
 
@@ -16,7 +20,7 @@ const LogoutButton = () => {
     <Button
       className={classes.root}
       variant="contained"
-      color="secondary"
+      size="small"
       onClick={() => logout({ returnTo: `${process.env.AUTH0_LOGOUT}` })}
     >
       Log Out

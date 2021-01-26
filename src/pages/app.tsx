@@ -6,20 +6,18 @@ import { makeStyles } from "@material-ui/core/styles"
 import App from "../components/App"
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: "3rem",
-    margin: "auto",
+  container: {
+    minWidth: "100%",
   },
 }))
 
 const AppPage = () => {
   const classes = useStyles()
-
   return (
     <>
-      <Layout>
-        <SEO title="Home" />
-        <Container maxWidth="lg" className={classes.root}>
+      <Layout margin>
+        <Container className={classes.container}>
+          <SEO title="Home" />
           <App />
         </Container>
       </Layout>

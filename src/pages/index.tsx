@@ -16,14 +16,12 @@ const IndexPage = () => {
   const classes = useStyles()
 
   return (
-    <>
-      <Layout>
-        <SEO title="Log In" />
-        <Container maxWidth="lg" className={classes.root}>
-          <Login />
-        </Container>
-      </Layout>
-    </>
+    <Layout margin={false}>
+      <SEO title="Log In" />
+      <Container maxWidth="lg" className={classes.root}>
+        <Login />
+      </Container>
+    </Layout>
   )
 }
 
