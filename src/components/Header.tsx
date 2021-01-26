@@ -7,17 +7,29 @@ import LogoutButton from "./LogoutButton"
 import { useAuth0 } from "@auth0/auth0-react"
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    justifyContent: "space-between",
+  appBar: {
+    margin: "0",
   },
-  container: {
+  typographyStyles: {
+    color: "#fff",
+  },
+  toolbar: {
+    justifyContent: "space-between",
+    margin: "0 0",
+  },
+  box: {
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
   },
-  navContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  fab: {
+    backgroundColor: "#fff",
+    color: "#66bb6a",
+    marginLeft: "1rem",
+    "&:hover": {
+      color: "#fff",
+      backgroundColor: "#66bb6a",
+    },
   },
 }))
 
@@ -28,35 +40,30 @@ const Header = () => {
   if (isLoading) return <Typography variant="body1">Loading...</Typography>
 
   return (
-    <AppBar>
-      <Toolbar className={classes.root}>
-        <Container maxWidth="lg" className={classes.navContainer}>
-          <Box className={classes.container}>
-            <Link
-              to="/"
-              style={{
-                textDecoration: `none`,
-              }}
-            >
-              <Typography variant="h4">My Fleet Tracker</Typography>
-            </Link>
-          </Box>
-          <Box className={classes.container}>
-            {isAuthenticated ? (
-              <>
-                <Typography>Welcome, {user.name}</Typography>
-                {""}
-                <LogoutButton />
-              </>
-            ) : (
-              <>
-                <Typography>Welcome, Guest</Typography>
-                {""}
-                <LoginButton />
-              </>
-            )}
-          </Box>
-        </Container>
+    <AppBar color="primary" position="fixed" className={classes.appBar}>
+      <Toolbar className={classes.toolbar}>
+        <Link
+          to="/"
+          style={{
+            textDecoration: `none`,
+          }}
+        >
+          <Typography variant="h6" className={classes.typographyStyles}>
+            My Fleet Tracker
+          </Typography>
+        </Link>
+
+        <Box className={classes.box}>
+          {isAuthenticated ? (
+            <>
+              <Typography>Welcome, {user.name}</Typography>
+              {""}
+              <LogoutButton />
+            </>
+          ) : (
+            <LoginButton />
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   )
