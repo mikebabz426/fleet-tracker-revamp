@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from "react"
+import * as React from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   AppBar,
   Toolbar,
@@ -13,6 +14,14 @@ import LogoutButton from "./LogoutButton"
 import { useAuth0 } from "@auth0/auth0-react"
 import { FilterContext } from "./../FilterContext"
 import Filter from "./Filters/Filter"
+import AddIcon from "@material-ui/icons/Add"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+
+export interface Props {
+  margin: boolean
+  addTruck: () => void
+  addTruckState: boolean
+}
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -41,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header = ({ margin }) => {
+const Header: React.FC<Props> = ({ margin, addTruck, addTruckState }) => {
   const classes = useStyles()
   const { user, isAuthenticated } = useAuth0()
   const [filters, setFilters] = useContext(FilterContext)
@@ -101,13 +110,13 @@ const Header = ({ margin }) => {
                 />
                 <Typography>Add Truck: </Typography>
                 <Fab
-                  onClick={props.addTruck}
+                  onClick={addTruck}
                   className={classes.fab}
                   size="small"
                   color="primary"
                   aria-label="add"
                 >
-                  {props.addTruckState ? <ArrowBackIcon /> : <AddIcon />}
+                  {addTruckState ? <ArrowBackIcon /> : <AddIcon />}
                 </Fab>
               </Box>
             </>

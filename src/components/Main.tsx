@@ -1,9 +1,15 @@
-import React, { useState } from "react"
+import * as React from "react"
 import { Grid } from "@material-ui/core"
 import FleetTable from "./Table/FleetTable"
 import AddTruckForm from "./NewTruckForm/AddTruckForm"
 import { gql, useQuery } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
+
+interface Props {
+  children?: React.ReactNode
+  addTruck: boolean
+  setAddTruck: () => void
+}
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -33,7 +39,7 @@ const FLEET_ALL = gql`
   }
 `
 
-const Main = () => {
+const Main: React.FC<Props> = ({ addTruck, setAddTruck }) => {
   const { loading, error, data, refetch } = useQuery(FLEET_ALL)
   const classes = useStyles()
 
@@ -45,7 +51,7 @@ const Main = () => {
           <AddTruckForm
             refetch={refetch}
             addTruck={addTruck}
-            toggle={e => setAddTruck(!addTruck)}
+            toggle={() => setAddTruck(!addTruck)}
           />
         ) : (
           <FleetTable

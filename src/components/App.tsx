@@ -6,6 +6,10 @@ import LoginButton from "../components/LoginButton"
 import Main from "../components/Main"
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 
+interface Props {
+  children?: React.ReactNode
+}
+
 const client = new ApolloClient({
   uri: "https://bright-sawfish-99.hasura.app/v1/graphql",
   cache: new InMemoryCache(),
@@ -24,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const App = () => {
+const App: React.FC<Props> = ({}) => {
   const classes = useStyles()
   const { isLoading, isAuthenticated, error, user } = useAuth0()
 
@@ -45,7 +49,7 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
-        <Main />
+        <Main addTruck={addTruck} />
       ) : (
         <Box className={classes.messageBox}>
           <Typography variant="h3" className={classes.message}>
