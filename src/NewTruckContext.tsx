@@ -1,17 +1,29 @@
 import * as React from "react"
-import { useState, createContext, Dispatch, SetStateAction } from "react"
+import { useState, createContext, useContext } from "react"
 
-type ContextType = { addTruck: boolean; setAddTruck: () => void }
-
-export const NewTruckContext = createContext<
-  [ContextType, Dispatch<SetStateAction<ContextType>>] | undefined
+const NewTruckContext = createContext<
+  | {
+      newTruck: boolean
+      setNewTruck: React.Dispatch<React.SetStateAction<boolean>>
+    }
+  | undefined
 >(undefined)
 
+export const useNewTruckContext = () => {
+  const context = useContext(NewTruckContext)
+  if (context === undefined) {
+    throw new Error(
+      "useAuthenticationContext must be used within a NewTruckContext Provider"
+    )
+  }
+  return context
+}
+
 export const NewTruckProvider: React.FC = props => {
-  const [addTruck, setAddTruck] = useState(null)
+  const [newTruck, setNewTruck] = useState(false)
 
   return (
-    <NewTruckContext.Provider value={[addTruck, setAddTruck]}>
+    <NewTruckContext.Provider value={{ newTruck, setNewTruck }}>
       {props.children}
     </NewTruckContext.Provider>
   )

@@ -17,10 +17,10 @@ import Filter from "./Filters/Filter"
 import AddIcon from "@material-ui/icons/Add"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 
-export interface Props {
+interface Props {
   margin: boolean
-  addTruck: () => void
-  addTruckState: boolean
+  setNewTruck: () => void
+  newTruck: boolean
 }
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header: React.FC<Props> = ({ margin, addTruck, addTruckState }) => {
+const Header: React.FC<Props> = ({ margin, newTruck, setNewTruck }) => {
   const classes = useStyles()
   const { user, isAuthenticated } = useAuth0()
   const [filters, setFilters] = useContext(FilterContext)
@@ -110,13 +110,13 @@ const Header: React.FC<Props> = ({ margin, addTruck, addTruckState }) => {
                 />
                 <Typography>Add Truck: </Typography>
                 <Fab
-                  onClick={addTruck}
+                  onClick={setNewTruck}
                   className={classes.fab}
                   size="small"
                   color="primary"
                   aria-label="add"
                 >
-                  {addTruckState ? <ArrowBackIcon /> : <AddIcon />}
+                  {newTruck ? <ArrowBackIcon /> : <AddIcon />}
                 </Fab>
               </Box>
             </>

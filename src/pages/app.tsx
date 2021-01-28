@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import Layout from "../components/Layout"
 import SEO from "../components/SEO"
 import { Container } from "@material-ui/core"
@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 const AppPage = () => {
   const classes = useStyles()
+
   return (
     <>
       <Layout margin>

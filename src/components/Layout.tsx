@@ -1,26 +1,27 @@
 import * as React from "react"
-import { useState } from "react"
+import { useContext } from "react"
 import { CssBaseline } from "@material-ui/core"
 import PropTypes from "prop-types"
 import Header from "./Header"
 import "@fontsource/roboto"
 import GlobalThemeProvider from "../GlobalThemeProvider"
+import { useNewTruckContext } from "../NewTruckContext"
 
 interface Props {
-  children: React.ReactNode
+  children?: React.ReactNode
   margin: boolean
 }
 
 const Layout: React.FC<Props> = ({ children, margin }) => {
-  const [addTruck, setAddTruck] = useState(false)
-
+  const { newTruck, setNewTruck } = useNewTruckContext()
+  console.log(newTruck)
   return (
     <GlobalThemeProvider>
       <CssBaseline>
         <Header
           margin={margin}
-          addTruck={() => setAddTruck(!addTruck)}
-          addTruckState={addTruck}
+          setNewTruck={() => setNewTruck(!newTruck)}
+          newTruck={newTruck}
         />
         {children}
       </CssBaseline>

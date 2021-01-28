@@ -9,17 +9,20 @@
 import React from "react"
 import { Auth0Provider } from "@auth0/auth0-react"
 import { FilterProvider } from "./src/FilterContext"
+import { NewTruckProvider } from "./src/NewTruckContext"
 
 export const wrapRootElement = ({ element }) => {
   return (
     <FilterProvider>
-      <Auth0Provider
-        domain={`${process.env.AUTH0_DOMAIN}`}
-        clientId={`${process.env.AUTH0_CLIENTID}`}
-        redirectUri={`${process.env.AUTH0_CALLBACK}`}
-      >
-        {element}
-      </Auth0Provider>
+      <NewTruckProvider>
+        <Auth0Provider
+          domain={`${process.env.AUTH0_DOMAIN}`}
+          clientId={`${process.env.AUTH0_CLIENTID}`}
+          redirectUri={`${process.env.AUTH0_CALLBACK}`}
+        >
+          {element}
+        </Auth0Provider>
+      </NewTruckProvider>
     </FilterProvider>
   )
 }
