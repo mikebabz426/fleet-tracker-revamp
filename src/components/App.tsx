@@ -44,8 +44,6 @@ const App: React.FC<Props> = ({}) => {
     </Box>
   ) : null
 
-  console.log(user)
-
   return (
     <ApolloProvider client={client}>
       {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
@@ -53,7 +51,8 @@ const App: React.FC<Props> = ({}) => {
       ) : (
         <Box className={classes.messageBox}>
           <Typography variant="h3" className={classes.message}>
-            To access your account please Log In or Sign Up.
+            If you are a member of Speed Freight Inc, please Log In with the
+            correct account!
           </Typography>
           <LoginButton />
         </Box>

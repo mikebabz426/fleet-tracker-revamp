@@ -21,6 +21,8 @@ interface Props {
   margin: boolean
   setNewTruck: () => void
   newTruck: boolean
+  distro: boolean
+  setDistro: () => void
 }
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +40,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    margin: "0px 1rem",
   },
   fab: {
     backgroundColor: "#fff",
@@ -50,7 +53,13 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Header: React.FC<Props> = ({ margin, newTruck, setNewTruck }) => {
+const Header: React.FC<Props> = ({
+  margin,
+  newTruck,
+  setNewTruck,
+  distro,
+  setDistro,
+}) => {
   const classes = useStyles()
   const { user, isAuthenticated } = useAuth0()
   const [filters, setFilters] = useContext(FilterContext)
@@ -118,6 +127,18 @@ const Header: React.FC<Props> = ({ margin, newTruck, setNewTruck }) => {
                 >
                   {newTruck ? <ArrowBackIcon /> : <AddIcon />}
                 </Fab>
+                <Box className={classes.box}>
+                  <Typography>New Truck List: </Typography>
+                  <Fab
+                    onClick={setDistro}
+                    className={classes.fab}
+                    size="small"
+                    color="primary"
+                    aria-label="add"
+                  >
+                    {distro ? <ArrowBackIcon /> : <AddIcon />}
+                  </Fab>
+                </Box>
               </Box>
             </>
           ) : null}

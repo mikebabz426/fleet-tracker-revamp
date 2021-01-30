@@ -5,6 +5,8 @@ import AddTruckForm from "./NewTruckForm/AddTruckForm"
 import { gql, useQuery } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
 import { useNewTruckContext } from "../NewTruckContext"
+import { useDistroContext } from "../DistroContext"
+import Distro from "./Distro/Distro"
 
 interface Props {
   children?: React.ReactNode
@@ -44,6 +46,7 @@ const Main: React.FC<Props> = ({}) => {
   const { loading, error, data, refetch } = useQuery(FLEET_ALL)
   const classes = useStyles()
   const { newTruck, setNewTruck } = useNewTruckContext()
+  const { distro, setDistro } = useDistroContext()
 
   return (
     <Grid container className={classes.container}>
@@ -55,6 +58,8 @@ const Main: React.FC<Props> = ({}) => {
             newTruck={newTruck}
             toggle={() => setNewTruck(!newTruck)}
           />
+        ) : distro ? (
+          <Distro />
         ) : (
           <FleetTable
             loading={loading}
