@@ -49,7 +49,7 @@ const App: React.FC<Props> = ({}) => {
   return (
     <ApolloProvider client={client}>
       {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
-        <Main addTruck={addTruck} />
+        <Main />
       ) : (
         <Box className={classes.messageBox}>
           <Typography variant="h3" className={classes.message}>

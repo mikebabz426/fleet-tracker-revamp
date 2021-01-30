@@ -5,19 +5,46 @@ import {
   TextField,
   Button,
   Avatar,
-  Radio,
   FormControlLabel,
   FormControl,
   Select,
   MenuItem,
   InputBase,
-  Paper,
+  Radio,
+  Theme,
 } from "@material-ui/core"
 import { makeStyles, withStyles } from "@material-ui/core/styles"
 import LocalShippingIcon from "@material-ui/icons/LocalShipping"
-import { Formik, Form, Field, useField } from "formik"
+import { Formik, Form, Field, useField, FieldAttributes } from "formik"
 import * as Yup from "yup"
 import { gql, useMutation } from "@apollo/client"
+
+//Custom Styles
+
+const CustomInput = withStyles((theme: Theme) => ({
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.background.paper,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: theme.palette.secondary,
+      boxShadow: `0 0 0 0.2rem rgba(102,187,106,.75)`,
+    },
+  },
+}))(InputBase)
+
+type MyRadioProps = { label: string } & FieldAttributes<{}>
+
+const CustomRadio: React.FC<MyRadioProps> = ({ label, ...props }) => {
+  const [field] = useField(props)
+  return <FormControlLabel {...field} control={<Radio />} label={label} />
+}
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -25,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     minWidth: 80,
   },
   container: {
-    backgroundColor: Paper,
+    backgroundColor: "#fff",
     borderRadius: "3px",
     display: "flex",
     flexDirection: "column",
@@ -45,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-//GQL Mutation
+//GQL Mutation to add new truck to database
 
 const ADD_DRIVER = gql`
   mutation MyMutation(
@@ -81,13 +108,6 @@ let truckSchema = Yup.object().shape({
   trailerType: Yup.string().required(),
   team: Yup.string().required(),
 })
-
-//Custom Radio Input
-
-const CustomRadio = ({ label, ...props }) => {
-  const [field] = useField(props)
-  return <FormControlLabel {...field} control={<Radio />} label={label} />
-}
 
 //Form Component
 
@@ -218,18 +238,14 @@ const AddTruckForm = props => {
               <Typography variant="body1">Select Team: </Typography>
               <FormControl variant="outlined" className={classes.formControl}>
                 <Field
-                  className={classes.selected}
+                  className="selected"
                   as={Select}
                   name="team"
                   variant="outlined"
                   input={<CustomInput />}
                 >
                   {teams.map(team => (
-                    <MenuItem
-                      className={classes.selected}
-                      value={team}
-                      key={team}
-                    >
+                    <MenuItem className="selected" value={team} key={team}>
                       {team}
                     </MenuItem>
                   ))}
@@ -257,23 +273,5 @@ const AddTruckForm = props => {
 }
 
 //Custom Styling
-
-const CustomInput = withStyles(theme => ({
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.background.paper,
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    padding: "10px 26px 10px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: theme.palette.secondary,
-      boxShadow: `0 0 0 0.2rem rgba(102,187,106,.75)`,
-    },
-  },
-}))(InputBase)
 
 export default AddTruckForm

@@ -9,6 +9,7 @@ const TableHeader = () => {
     "Driver",
     "Truck",
     "Trailer",
+    "Endorsements",
     "Type",
     "Location",
     "State",

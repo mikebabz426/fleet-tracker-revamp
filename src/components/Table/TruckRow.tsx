@@ -17,6 +17,8 @@ import {
   CheckBoxOutlineBlank,
 } from "@material-ui/icons"
 import { withStyles, makeStyles } from "@material-ui/core/styles"
+import Haz from "../../assets/hazmat-icon.svg"
+import Tnkr from "../../assets/tanker-icon.svg"
 import { Formik, Field } from "formik"
 import { weekDays, states, truckStatus } from "./../../services/services"
 import { useMutation, gql } from "@apollo/client"
@@ -78,7 +80,11 @@ const TruckRow = props => {
     needs,
     notes,
     refetch,
+    hazmat,
+    tanker,
   } = props
+
+  console.log(hazmat, tanker)
 
   return (
     <Formik
@@ -94,29 +100,28 @@ const TruckRow = props => {
         notes: notes,
         edit: false,
       }}
+      onSubmit={values => {
+        updateTruck({
+          variables: {
+            id: values.id,
+            day: values.day,
+            location: values.location,
+            usState: values.usState,
+            time: values.time,
+            appt: values.appt,
+            status: values.status,
+            needs: values.needs,
+            notes: values.notes,
+          },
+        })
+        refetch()
+      }}
     >
-      {({ values, setFieldValue }) => {
+      {({ values, setFieldValue, handleSubmit }) => {
         let trailerClass
         type === "53' Van"
           ? (trailerClass = classes.van)
           : (trailerClass = classes.reefer)
-
-        const submit = () => {
-          updateTruck({
-            variables: {
-              id: values.id,
-              day: values.day,
-              location: values.location,
-              usState: values.usState,
-              time: values.time,
-              appt: values.appt,
-              status: values.status,
-              needs: values.needs,
-              notes: values.notes,
-            },
-          })
-          refetch()
-        }
 
         return (
           <StyledTableRow key={id}>
@@ -135,7 +140,7 @@ const TruckRow = props => {
                   className={classes.edit}
                   color="secondary"
                   onClick={() => {
-                    submit()
+                    handleSubmit()
                     setFieldValue("edit", false, false)
                   }}
                 />
@@ -174,6 +179,10 @@ const TruckRow = props => {
             <StyledTableCell>{truck}</StyledTableCell>
             <StyledTableCell>{trailer}</StyledTableCell>
             <StyledTableCell>
+              {hazmat ? <Haz className={classes.icon} /> : null}
+              {tanker ? <Tnkr className={classes.icon} /> : null}
+            </StyledTableCell>
+            <StyledTableCell>
               <Typography className={trailerClass}>{type}</Typography>
             </StyledTableCell>
             <StyledTableCell>
@@ -188,7 +197,7 @@ const TruckRow = props => {
                   size="small"
                   color="secondary"
                   variant="outlined"
-                  className={classes.location}
+                  // className={classes.location}
                   as={CustomLocationField}
                 />
               )}
@@ -370,19 +379,24 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "#fff",
   },
   typeStyle: {
-    fontWeight: "bold",
+    fontWeight: 500,
   },
   edit: {
     cursor: "pointer",
   },
 
   van: {
-    color: "green",
-    fontWeight: "bold",
+    color: "#43a047",
+    fontWeight: 500,
   },
   reefer: {
-    color: "red",
-    fontWeight: "bold",
+    color: "#f44336",
+    fontWeight: 500,
+  },
+  icon: {
+    maxWidth: 18,
+    maxHeight: 18,
+    margin: "0px 3px",
   },
 }))
 
@@ -397,7 +411,6 @@ const CustomField = withStyles({
 
 const CustomLocationField = withStyles({
   root: {
-    fontWeight: "bold",
     width: 160,
     "& .MuiInput-underline:after": {
       borderBottomColor: "#66bb6a",
@@ -411,7 +424,7 @@ const StyledTableCell = withStyles(theme => ({
     color: theme.palette.common.white,
   },
   body: {
-    fontSize: 16,
+    fontSize: 14,
     padding: ".5rem 1rem .5rem 1rem",
   },
 }))(TableCell)
