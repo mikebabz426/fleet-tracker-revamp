@@ -12,6 +12,8 @@ import {
   InputBase,
   Radio,
   Theme,
+  Checkbox,
+  Divider,
 } from "@material-ui/core"
 import { makeStyles, withStyles } from "@material-ui/core/styles"
 import LocalShippingIcon from "@material-ui/icons/LocalShipping"
@@ -70,6 +72,15 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  box: {
+    dispaly: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  divider: {
+    margin: 5,
+  },
 }))
 
 //GQL Mutation to add new truck to database
@@ -82,6 +93,8 @@ const ADD_DRIVER = gql`
     $cell: String!
     $type: String!
     $team: String!
+    $hazmat: Boolean!
+    $tanker: Boolean!
   ) {
     insert_fleet_table_one(
       object: {
@@ -91,6 +104,8 @@ const ADD_DRIVER = gql`
         cell: $cell
         type: $type
         team: $team
+        hazmat: $hazmat
+        tanker: $tanker
       }
     ) {
       id
@@ -137,6 +152,8 @@ const AddTruckForm = props => {
           trailerNumber: "",
           trailerType: "",
           team: "",
+          hazmat: false,
+          tanker: false,
         }}
         validationSchema={truckSchema}
         onSubmit={values => {
@@ -148,13 +165,16 @@ const AddTruckForm = props => {
               cell: values.phoneNumber,
               team: values.team,
               type: values.trailerType,
+              hazmat: values.hazmat,
+              tanker: values.tanker,
             },
           })
           refetch()
           toggle(false)
         }}
       >
-        {({ errors, touched }) => {
+        {({ errors, touched, values }) => {
+          console.log(values)
           return (
             <Form>
               <Field
@@ -217,7 +237,10 @@ const AddTruckForm = props => {
                   Please enter a valid trailer number
                 </Typography>
               ) : null}
-              <Typography variant="body1">Trailer Type: </Typography>
+              <Divider className={classes.divider} />
+              <Typography variant="body1" style={{ fontWeight: 500 }}>
+                Select Trailer Type:{" "}
+              </Typography>
               <CustomRadio
                 value="53' Reefer"
                 name="trailerType"
@@ -235,7 +258,25 @@ const AddTruckForm = props => {
                   Please select a trailer type
                 </Typography>
               ) : null}
-              <Typography variant="body1">Select Team: </Typography>
+              <Divider className={classes.divider} />
+              <div className={classes.box}>
+                <Typography variant="body1" style={{ fontWeight: 500 }}>
+                  Select Endorsements:
+                </Typography>
+                <Field type="checkbox" name="hazmat" as={Checkbox} />
+                <Typography display="inline" variant="body1">
+                  Hazmat
+                </Typography>
+
+                <Field type="checkbox" name="tanker" as={Checkbox} />
+                <Typography display="inline" variant="body1">
+                  Tanker
+                </Typography>
+              </div>
+              <Divider className={classes.divider} />
+              <Typography variant="body1" style={{ fontWeight: 500 }}>
+                Select Team: -
+              </Typography>
               <FormControl variant="outlined" className={classes.formControl}>
                 <Field
                   className="selected"
