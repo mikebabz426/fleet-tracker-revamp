@@ -5,19 +5,11 @@ import { withStyles } from "@material-ui/core/styles"
 const TableHeader = () => {
   const headerNames = [
     "Day",
-    "Cell Phone",
-    "Driver",
-    "Truck",
-    "Trailer",
-    "H/T",
+    "Endorsements",
     "Type",
     "Location",
     "State",
-    "Time",
-    "Appt",
-    "Status",
     "Needs",
-    "Notes",
   ]
   return (
     <TableHead>
