@@ -5,7 +5,6 @@
  */
 
 // // You can delete this file if you're not using it
-
 import React from "react"
 import { Auth0Provider } from "@auth0/auth0-react"
 import { FilterProvider } from "./src/FilterContext"

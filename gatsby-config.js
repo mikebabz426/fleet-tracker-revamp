@@ -25,6 +25,12 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-plugin-apollo",
+      options: {
+        uri: "https://bright-sawfish-99.hasura.app/v1/graphql",
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `my-fleet-tracker`,

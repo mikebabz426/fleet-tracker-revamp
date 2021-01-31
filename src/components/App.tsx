@@ -4,16 +4,10 @@ import { Box, Typography } from "@material-ui/core"
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginButton from "../components/LoginButton"
 import Main from "../components/Main"
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 
 interface Props {
   children?: React.ReactNode
 }
-
-const client = new ApolloClient({
-  uri: "https://bright-sawfish-99.hasura.app/v1/graphql",
-  cache: new InMemoryCache(),
-})
 
 const useStyles = makeStyles(theme => ({
   messageBox: {
@@ -45,7 +39,7 @@ const App: React.FC<Props> = ({}) => {
   ) : null
 
   return (
-    <ApolloProvider client={client}>
+    <>
       {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
         <Main />
       ) : (
@@ -57,7 +51,7 @@ const App: React.FC<Props> = ({}) => {
           <LoginButton />
         </Box>
       )}
-    </ApolloProvider>
+    </>
   )
 }
 
