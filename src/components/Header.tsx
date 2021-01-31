@@ -104,29 +104,35 @@ const Header: React.FC<Props> = ({
               <Typography className={classes.typographyStyles} variant="body2">
                 US Diesel Price Avg: ${fuelPrice} /G
               </Typography>
+
               <Box className={classes.box}>
-                <Typography>Team Filter: </Typography>
-                <Filter
-                  label="Team"
-                  options={teamOptions}
-                  handler={e => handleChange(e, "team")}
-                />
-                <Typography>Day Filter: </Typography>
-                <Filter
-                  label="Day"
-                  options={dayOptions}
-                  handler={e => handleChange(e, "day")}
-                />
-                <Typography>Add Truck: </Typography>
-                <Fab
-                  onClick={setNewTruck}
-                  className={classes.fab}
-                  size="small"
-                  color="primary"
-                  aria-label="add"
-                >
-                  {newTruck ? <ArrowBackIcon /> : <AddIcon />}
-                </Fab>
+                {distro === false ? (
+                  <>
+                    <Typography>Team Filter: </Typography>
+                    <Filter
+                      label="Team"
+                      options={teamOptions}
+                      handler={e => handleChange(e, "team")}
+                    />
+                    <Typography>Day Filter: </Typography>
+                    <Filter
+                      label="Day"
+                      options={dayOptions}
+                      handler={e => handleChange(e, "day")}
+                    />
+                    <Typography>Add Truck: </Typography>
+                    <Fab
+                      onClick={setNewTruck}
+                      className={classes.fab}
+                      size="small"
+                      color="primary"
+                      aria-label="add"
+                    >
+                      {newTruck ? <ArrowBackIcon /> : <AddIcon />}
+                    </Fab>
+                  </>
+                ) : null}
+
                 <Box className={classes.box}>
                   <Typography>New Truck List: </Typography>
                   <Fab

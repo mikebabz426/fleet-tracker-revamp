@@ -15,27 +15,6 @@ import Legend from "./Legend"
 import DistroTable from "./DistroTable"
 import { weekDays } from "../../services/services"
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  btnGroup: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}))
-
 const initialState = {
   team: "All",
   day: "All",
@@ -46,7 +25,7 @@ const Distro: React.FC = () => {
   const [filter, setFilter] = useState(initialState)
   const classes = useStyles()
 
-  const teams = ["Mike", "Alex", "Chip", "Vlad"]
+  const teams = ["All", "Mike", "Alex", "Chip", "Vlad"]
 
   const handleChange = (e, type) => {
     type === "day"
@@ -64,12 +43,13 @@ const Distro: React.FC = () => {
             id="select-outlined"
             onChange={e => handleChange(e, "day")}
             label="Day"
+            value={filter.day}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            <MenuItem value="All">All</MenuItem>
             {weekDays.map(day => (
-              <MenuItem value={day}>{day}</MenuItem>
+              <MenuItem key={day} value={day}>
+                {day}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -80,12 +60,12 @@ const Distro: React.FC = () => {
             id="select-outlined"
             onChange={e => handleChange(e, "team")}
             label="Team"
+            value={filter.team}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             {teams.map(team => (
-              <MenuItem value={team}>{team}</MenuItem>
+              <MenuItem key={team} value={team}>
+                {team}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -109,10 +89,10 @@ const Distro: React.FC = () => {
         )}
       </Container>
       {visibility ? (
-        <>
+        <Container className={classes.distro}>
           <Legend />
           <DistroTable {...filter} />
-        </>
+        </Container>
       ) : (
         <Typography variant="body2">
           Please make the required selections, when done click generate to view
@@ -122,5 +102,34 @@ const Distro: React.FC = () => {
     </Container>
   )
 }
+
+//Custom Styles
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  btnGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  distro: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+}))
 
 export default Distro

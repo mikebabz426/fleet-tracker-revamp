@@ -84,8 +84,6 @@ const TruckRow = props => {
     tanker,
   } = props
 
-  console.log(hazmat, tanker)
-
   return (
     <Formik
       initialValues={{

@@ -7,7 +7,7 @@ import Tnkr from "../../assets/tanker-icon.svg"
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    justifyContent: "left",
+    justifyContent: "center",
     alignItems: "center",
   },
   icon: {
@@ -26,7 +26,7 @@ const Legend: React.FC = () => {
 
   return (
     <Container className={classes.root}>
-      <Typography>Legend:</Typography>
+      <Typography>Key:</Typography>
       <Box className={classes.box}>
         <Haz className={classes.icon} />
 
@@ -35,7 +35,7 @@ const Legend: React.FC = () => {
       <Box className={classes.box}>
         <Tnkr className={classes.icon} />
 
-        <Typography variant="body2">Tanker</Typography>
+        <Typography variant="body2">Tanker Endorsed</Typography>
       </Box>
     </Container>
   )

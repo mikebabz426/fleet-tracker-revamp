@@ -46,7 +46,7 @@ const Main: React.FC<Props> = ({}) => {
   const { loading, error, data, refetch } = useQuery(FLEET_ALL)
   const classes = useStyles()
   const { newTruck, setNewTruck } = useNewTruckContext()
-  const { distro, setDistro } = useDistroContext()
+  const { distro } = useDistroContext()
 
   return (
     <Grid container className={classes.container}>

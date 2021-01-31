@@ -174,7 +174,6 @@ const AddTruckForm = props => {
         }}
       >
         {({ errors, touched, values }) => {
-          console.log(values)
           return (
             <Form>
               <Field

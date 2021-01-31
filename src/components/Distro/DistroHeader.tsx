@@ -3,17 +3,10 @@ import { TableCell, TableHead, TableRow } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
 const TableHeader = () => {
-  const headerNames = [
-    "Day",
-    "Endorsements",
-    "Type",
-    "Location",
-    "State",
-    "Needs",
-  ]
+  const headerNames = ["Day", "", "Type", "Location", "State", "Needs"]
   return (
-    <TableHead>
-      <TableRow>
+    <StyledTableHead>
+      <StyledTableRow>
         <StyledTableCell />
         <StyledTableCell />
 
@@ -21,8 +14,8 @@ const TableHeader = () => {
           <StyledTableCell key={header}>{header}</StyledTableCell>
         ))}
         <StyledTableCell />
-      </TableRow>
-    </TableHead>
+      </StyledTableRow>
+    </StyledTableHead>
   )
 }
 
@@ -32,11 +25,26 @@ const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: "#0257A2",
     color: theme.palette.common.white,
+    padding: ".3rem .3rem 0rem .3rem",
+    textAlign: "left",
   },
   body: {
     fontSize: 18,
-    padding: ".2rem .5rem",
+    padding: ".3rem .3rem 0rem .3rem",
+    textAlign: "left",
   },
 }))(TableCell)
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    padding: ".2rem 0rem",
+  },
+}))(TableRow)
+
+const StyledTableHead = withStyles(theme => ({
+  root: {
+    padding: ".2rem 0rem",
+  },
+}))(TableHead)
 
 export default TableHeader

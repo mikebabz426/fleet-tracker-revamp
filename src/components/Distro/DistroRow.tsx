@@ -27,28 +27,28 @@ const DistroRow: React.FC<Props> = props => {
   return (
     <StyledTableRow key={id}>
       <StyledTableCell />
-      //Day
+      <StyledTableCell />
       <StyledTableCell>
         <Typography className={classes.typeStyle}>{day}</Typography>
       </StyledTableCell>
-      //Endorsements
+
       <StyledTableCell>
         {hazmat ? <Haz className={classes.icon} /> : null}
         {tanker ? <Tnkr className={classes.icon} /> : null}
       </StyledTableCell>
-      //Type
+
       <StyledTableCell>
         <Typography className={trailerClass}>{type}</Typography>
       </StyledTableCell>
-      //Location
+
       <StyledTableCell>
         <Typography className={classes.typeStyle}>{location}</Typography>
       </StyledTableCell>
-      //State
+
       <StyledTableCell>
         <Typography className={classes.typeStyle}>{usState}</Typography>
       </StyledTableCell>
-      //Needs
+
       <StyledTableCell>
         <Typography className={classes.typeStyle}>{needs}</Typography>
       </StyledTableCell>
@@ -60,36 +60,8 @@ const DistroRow: React.FC<Props> = props => {
 //Custom Component Styling
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 80,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  selected: {
-    fontWeight: "bold",
-  },
-  inputCenter: {
-    textAlign: "center",
-    color: "red",
-  },
-
-  location: {
-    fontWeight: "bold",
-  },
-
-  table: {
-    minWidth: 700,
-  },
-  notes: {
-    backgroundColor: "#fff",
-  },
   typeStyle: {
     fontWeight: 500,
-  },
-  edit: {
-    cursor: "pointer",
   },
 
   van: {
@@ -111,10 +83,16 @@ const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: "#0257A2",
     color: theme.palette.common.white,
+    margin: 0,
+    textAlign: "left",
+    padding: ".3rem .3rem 0rem .3rem",
   },
   body: {
+    textAlign: "left",
+    margin: 0,
     fontSize: 14,
-    padding: ".5rem 1rem .5rem 1rem",
+    minWidth: 20,
+    padding: ".3rem .3rem 0rem .3rem",
   },
 }))(TableCell)
 

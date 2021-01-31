@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   CircularProgress,
+  Container,
 } from "@material-ui/core"
 import { FilterContext } from "../../FilterContext"
 import TableHeader from "./TableHeader"
@@ -18,7 +19,12 @@ const FleetTable = props => {
     refetch()
   }, [filters, refetch])
 
-  if (loading) return <CircularProgress />
+  if (loading)
+    return (
+      <Container>
+        <CircularProgress />
+      </Container>
+    )
   if (error) return <p>Error :(</p>
 
   const { fleet_table: trucks } = data
