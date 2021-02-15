@@ -11,6 +11,8 @@ import { Auth0Provider } from "@auth0/auth0-react"
 import { FilterProvider } from "./src/FilterContext"
 import { NewTruckProvider } from "./src/NewTruckContext"
 import { DistroProvider } from "./src/DistroContext"
+import { ApolloProvider } from "@apollo/client"
+import { client } from "./src/components/apollo/client"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -22,7 +24,7 @@ export const wrapRootElement = ({ element }) => {
             clientId={`${process.env.AUTH0_CLIENTID}`}
             redirectUri={`${process.env.AUTH0_CALLBACK}`}
           >
-            {element}
+            <ApolloProvider client={client}>{element}</ApolloProvider>
           </Auth0Provider>
         </DistroProvider>
       </NewTruckProvider>
