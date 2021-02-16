@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react"
+import * as React from "react"
+import { useContext } from "react"
 import {
   Paper,
   TableContainer,
@@ -13,11 +14,7 @@ import TruckRow from "./TruckRow"
 
 const FleetTable = props => {
   const [filters] = useContext(FilterContext)
-  const { loading, error, data, refetch } = props
-
-  useEffect(() => {
-    refetch()
-  }, [filters, refetch])
+  const { loading, error, data } = props
 
   if (loading)
     return (
@@ -41,7 +38,7 @@ const FleetTable = props => {
       return false
     })
     .map(truck => {
-      return <TruckRow refetch={refetch} key={truck.id} {...truck} />
+      return <TruckRow key={truck.id} {...truck} />
     })
 
   return (

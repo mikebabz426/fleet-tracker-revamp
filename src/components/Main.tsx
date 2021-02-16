@@ -2,7 +2,7 @@ import * as React from "react"
 import { Grid } from "@material-ui/core"
 import FleetTable from "./Table/FleetTable"
 import AddTruckForm from "./NewTruckForm/AddTruckForm"
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery, useSubscription } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
 import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const FLEET_ALL = gql`
-  query FLEET_ALL {
+  subscription FLEET_ALL {
     fleet_table {
       appt
       cell
@@ -43,7 +43,7 @@ const FLEET_ALL = gql`
 `
 
 const Main: React.FC<Props> = ({}) => {
-  const { loading, error, data, refetch } = useQuery(FLEET_ALL)
+  const { loading, error, data } = useSubscription(FLEET_ALL)
   const classes = useStyles()
   const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro } = useDistroContext()
@@ -54,19 +54,13 @@ const Main: React.FC<Props> = ({}) => {
       <Grid item xs={12} sm={12}>
         {newTruck ? (
           <AddTruckForm
-            refetch={refetch}
             newTruck={newTruck}
             toggle={() => setNewTruck(!newTruck)}
           />
         ) : distro ? (
           <Distro />
         ) : (
-          <FleetTable
-            loading={loading}
-            data={data}
-            error={error}
-            refetch={refetch}
-          />
+          <FleetTable loading={loading} data={data} error={error} />
         )}
       </Grid>
       <Grid item xs={false} sm={false} />

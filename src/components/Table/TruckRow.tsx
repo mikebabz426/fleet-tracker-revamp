@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import {
   Typography,
   TextField,
@@ -79,7 +79,6 @@ const TruckRow = props => {
     status,
     needs,
     notes,
-    refetch,
     hazmat,
     tanker,
   } = props
@@ -99,6 +98,7 @@ const TruckRow = props => {
         edit: false,
       }}
       onSubmit={values => {
+        console.log(values)
         updateTruck({
           variables: {
             id: values.id,
@@ -112,7 +112,6 @@ const TruckRow = props => {
             notes: values.notes,
           },
         })
-        refetch()
       }}
     >
       {({ values, setFieldValue, handleSubmit }) => {
@@ -195,7 +194,6 @@ const TruckRow = props => {
                   size="small"
                   color="secondary"
                   variant="outlined"
-                  // className={classes.location}
                   as={CustomLocationField}
                 />
               )}

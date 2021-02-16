@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import * as React from "react"
 import {
   Container,
   Typography,
@@ -127,14 +127,10 @@ let truckSchema = Yup.object().shape({
 //Form Component
 
 const AddTruckForm = props => {
-  const { refetch, addTruck, toggle } = props
+  const { toggle } = props
   const classes = useStyles()
   const [addDriver] = useMutation(ADD_DRIVER)
   const teams = ["Mike", "Alex", "Chip", "Vlad"]
-
-  useEffect(() => {
-    refetch()
-  }, [refetch, addTruck])
 
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
@@ -169,11 +165,10 @@ const AddTruckForm = props => {
               tanker: values.tanker,
             },
           })
-          refetch()
           toggle(false)
         }}
       >
-        {({ errors, touched, values }) => {
+        {({ errors, touched }) => {
           return (
             <Form>
               <Field
