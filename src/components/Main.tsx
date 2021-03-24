@@ -2,7 +2,7 @@ import * as React from "react"
 import { Grid } from "@material-ui/core"
 import FleetTable from "./Table/FleetTable"
 import AddTruckForm from "./NewTruckForm/AddTruckForm"
-import { gql, useQuery, useSubscription } from "@apollo/client"
+import { gql, useSubscription } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
 import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
@@ -58,7 +58,7 @@ const Main: React.FC<Props> = ({}) => {
             toggle={() => setNewTruck(!newTruck)}
           />
         ) : distro ? (
-          <Distro />
+          <Distro loading={loading} data={data} error={error} />
         ) : (
           <FleetTable loading={loading} data={data} error={error} />
         )}

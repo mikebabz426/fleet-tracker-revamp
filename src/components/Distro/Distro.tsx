@@ -20,10 +20,11 @@ const initialState = {
   day: "All",
 }
 
-const Distro: React.FC = () => {
+const Distro = props => {
   const [visibility, setVisibility] = useState(false)
   const [filter, setFilter] = useState(initialState)
   const classes = useStyles()
+  const { data, loading, error } = props
 
   const teams = ["All", "Mike", "Alex", "Chip", "Vlad"]
 
@@ -91,7 +92,12 @@ const Distro: React.FC = () => {
       {visibility ? (
         <Container className={classes.distro}>
           <Legend />
-          <DistroTable {...filter} />
+          <DistroTable
+            {...filter}
+            data={data}
+            loading={loading}
+            error={error}
+          />
         </Container>
       ) : (
         <Typography variant="body2">

@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { FilterContext } from "./../FilterContext"
 import Filter from "./Filters/Filter"
 import AddIcon from "@material-ui/icons/Add"
+import ListAltIcon from "@material-ui/icons/ListAlt"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 
 interface Props {
@@ -142,7 +143,7 @@ const Header: React.FC<Props> = ({
                     color="primary"
                     aria-label="add"
                   >
-                    {distro ? <ArrowBackIcon /> : <AddIcon />}
+                    {distro ? <ArrowBackIcon /> : <ListAltIcon />}
                   </Fab>
                 </Box>
               </Box>

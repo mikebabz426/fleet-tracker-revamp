@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useEffect } from "react"
 import {
   Paper,
   TableContainer,
@@ -11,37 +10,18 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import { makeStyles } from "@material-ui/core/styles"
 import DistroHeader from "./DistroHeader"
 import DistroRow from "./DistroRow"
-import { gql, useQuery } from "@apollo/client"
 
 interface Props {
   day: string
   team: string
+  data: any
+  loading: any
+  error: any
 }
 
-const FLEET_ALL = gql`
-  query FLEET_ALL {
-    fleet_table {
-      id
-      day
-      location
-      needs
-      team
-      type
-      usState
-      hazmat
-      tanker
-    }
-  }
-`
-
-const DistroTable: React.FC<Props> = ({ day, team }) => {
+const DistroTable: React.FC<Props> = ({ day, team, data, error, loading }) => {
   const classes = useStyles()
-  const { loading, error, data, refetch } = useQuery(FLEET_ALL)
   const { fleet_table: trucks } = data
-
-  useEffect(() => {
-    refetch()
-  }, [day, team, refetch])
 
   const filteredTrucks = trucks
     .filter(truck => {
