@@ -67,6 +67,7 @@ const Header: React.FC<Props> = ({
   const [fuelPrice, setFuelPrice] = useState(0)
   const teamOptions = ["All", "Mike", "Alex", "Chip", "Vlad"]
   const dayOptions = ["All", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  const url = `${window.location.href}` === `http://localhost:8000/app/`
 
   const handleChange = (e, type) => {
     type === "day"
@@ -76,7 +77,7 @@ const Header: React.FC<Props> = ({
 
   const getFuelPrice = async () => {
     await fetch(
-      `https://api.eia.gov/series/?api_key=5c7387cb68efe9616f46194d17493e35&series_id=PET.EMD_EPD2D_PTE_NUS_DPG.W`
+      `https://api.eia.gov/series/?api_key=${process.env.EIA_API_KEY}&series_id=PET.EMD_EPD2D_PTE_NUS_DPG.W`
     )
       .then(res => res.json())
       .then(data => setFuelPrice(data.series[0].data[0][1]))
@@ -100,7 +101,7 @@ const Header: React.FC<Props> = ({
               My Fleet Tracker
             </Typography>
           </Link>
-          {isAuthenticated ? (
+          {url && isAuthenticated && (
             <>
               <Typography className={classes.typographyStyles} variant="body2">
                 US Diesel Price Avg: ${fuelPrice} /G
@@ -148,7 +149,7 @@ const Header: React.FC<Props> = ({
                 </Box>
               </Box>
             </>
-          ) : null}
+          )}
 
           <Box className={classes.box}>
             {isAuthenticated ? (

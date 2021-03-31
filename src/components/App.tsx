@@ -44,7 +44,7 @@ const App: React.FC<Props> = ({}) => {
         <Main />
       ) : (
         <Box className={classes.messageBox}>
-          <Typography variant="h3" className={classes.message}>
+          <Typography variant="h6" className={classes.message}>
             If you are a member of Speed Freight Inc, please Log In with the
             correct account!
           </Typography>

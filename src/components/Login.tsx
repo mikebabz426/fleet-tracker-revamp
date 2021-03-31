@@ -53,7 +53,7 @@ const Login = () => {
     <Container className={classes.container}>
       <Box className={classes.box}>
         <Typography variant="h4" className={classes.subheading}>
-          Authentication with Auth0 has been disabled for demo purposes.
+          Authorization has been disabled for demo purposes.
           {/* "Roads? Where we're going, we dont need... roads."
           <br></br>
           <span style={{ fontStyle: "italic", fontSize: "18px" }}>
