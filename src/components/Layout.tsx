@@ -10,9 +10,10 @@ import { useDistroContext } from "../DistroContext"
 interface Props {
   children?: React.ReactNode
   margin: boolean
+  headerInfo: boolean
 }
 
-const Layout: React.FC<Props> = ({ children, margin }) => {
+const Layout: React.FC<Props> = ({ children, margin, headerInfo }) => {
   const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro, setDistro } = useDistroContext()
 
@@ -20,6 +21,7 @@ const Layout: React.FC<Props> = ({ children, margin }) => {
     <GlobalThemeProvider>
       <CssBaseline>
         <Header
+          infoDisplay={headerInfo}
           margin={margin}
           setNewTruck={() => setNewTruck(!newTruck)}
           newTruck={newTruck}

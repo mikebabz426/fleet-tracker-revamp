@@ -16,7 +16,7 @@ const IndexPage = () => {
   const classes = useStyles()
 
   return (
-    <Layout margin={false}>
+    <Layout margin={false} headerInfo={false}>
       <SEO title="Log In" />
       <Container maxWidth="lg" className={classes.root}>
         <Login />

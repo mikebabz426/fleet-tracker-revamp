@@ -156,8 +156,8 @@ const AddTruckForm = props => {
           addDriver({
             variables: {
               driver: values.driverName,
-              truck: values.truckNumber,
-              trailer: values.trailerNumber,
+              truck: parseInt(values.truckNumber, 10),
+              trailer: parseInt(values.trailerNumber, 10),
               cell: values.phoneNumber,
               team: values.team,
               type: values.trailerType,

@@ -16,7 +16,7 @@ const AppPage = () => {
 
   return (
     <>
-      <Layout margin>
+      <Layout margin headerInfo>
         <Container className={classes.container}>
           <SEO title="Home" />
           <App />

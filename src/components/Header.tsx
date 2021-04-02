@@ -19,6 +19,7 @@ import ListAltIcon from "@material-ui/icons/ListAlt"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 
 interface Props {
+  infoDisplay: boolean
   margin: boolean
   setNewTruck: () => void
   newTruck: boolean
@@ -55,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header: React.FC<Props> = ({
+  infoDisplay,
   margin,
   newTruck,
   setNewTruck,
@@ -67,7 +69,6 @@ const Header: React.FC<Props> = ({
   const [fuelPrice, setFuelPrice] = useState(0)
   const teamOptions = ["All", "Mike", "Alex", "Chip", "Vlad"]
   const dayOptions = ["All", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-  const url = `${window.location.href}` === `http://localhost:8000/app/`
 
   const handleChange = (e, type) => {
     type === "day"
@@ -101,7 +102,7 @@ const Header: React.FC<Props> = ({
               My Fleet Tracker
             </Typography>
           </Link>
-          {url && isAuthenticated && (
+          {infoDisplay && isAuthenticated && (
             <>
               <Typography className={classes.typographyStyles} variant="body2">
                 US Diesel Price Avg: ${fuelPrice} /G
