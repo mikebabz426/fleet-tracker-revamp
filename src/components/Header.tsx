@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { FilterContext } from "./../FilterContext"
 import Filter from "./Filters/Filter"
 import AddIcon from "@material-ui/icons/Add"
+import LocalShippingIcon from "@material-ui/icons/LocalShipping"
 import ListAltIcon from "@material-ui/icons/ListAlt"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 
@@ -25,6 +26,8 @@ interface Props {
   newTruck: boolean
   distro: boolean
   setDistro: () => void
+  settings: boolean
+  setSettings: () => void
 }
 
 const useStyles = makeStyles(theme => ({
@@ -62,6 +65,8 @@ const Header: React.FC<Props> = ({
   setNewTruck,
   distro,
   setDistro,
+  settings,
+  setSettings,
 }) => {
   const classes = useStyles()
   const { user, isAuthenticated } = useAuth0()
@@ -129,7 +134,7 @@ const Header: React.FC<Props> = ({
                       className={classes.fab}
                       size="small"
                       color="primary"
-                      aria-label="add"
+                      aria-label="add-truck"
                     >
                       {newTruck ? <ArrowBackIcon /> : <AddIcon />}
                     </Fab>
@@ -143,9 +148,21 @@ const Header: React.FC<Props> = ({
                     className={classes.fab}
                     size="small"
                     color="primary"
-                    aria-label="add"
+                    aria-label="new-truck-list"
                   >
                     {distro ? <ArrowBackIcon /> : <ListAltIcon />}
+                  </Fab>
+                </Box>
+                <Box className={classes.box}>
+                  <Typography>Fleet Management</Typography>
+                  <Fab
+                    onClick={setSettings}
+                    className={classes.fab}
+                    size="small"
+                    color="primary"
+                    aria-label="fleet-management"
+                  >
+                    {settings ? <ArrowBackIcon /> : <LocalShippingIcon />}
                   </Fab>
                 </Box>
               </Box>

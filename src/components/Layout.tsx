@@ -6,6 +6,7 @@ import "@fontsource/roboto"
 import GlobalThemeProvider from "../GlobalThemeProvider"
 import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
+import { useSettingsContext } from "../SettingsContext"
 
 interface Props {
   children?: React.ReactNode
@@ -16,6 +17,7 @@ interface Props {
 const Layout: React.FC<Props> = ({ children, margin, headerInfo }) => {
   const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro, setDistro } = useDistroContext()
+  const { settings, setSettings } = useSettingsContext()
 
   return (
     <GlobalThemeProvider>
@@ -27,6 +29,8 @@ const Layout: React.FC<Props> = ({ children, margin, headerInfo }) => {
           newTruck={newTruck}
           setDistro={() => setDistro(!distro)}
           distro={distro}
+          settings={settings}
+          setSettings={() => setSettings(!settings)}
         />
         {children}
       </CssBaseline>
