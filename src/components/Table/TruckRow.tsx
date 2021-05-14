@@ -98,7 +98,6 @@ const TruckRow = props => {
         edit: false,
       }}
       onSubmit={values => {
-        console.log(values)
         updateTruck({
           variables: {
             id: values.id,
