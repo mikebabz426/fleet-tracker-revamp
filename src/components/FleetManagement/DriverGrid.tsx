@@ -16,6 +16,7 @@ import {
   Paper,
   CircularProgress,
 } from "@material-ui/core"
+import DriverRow from "./DriverRow"
 
 const DriverGrid = ({ loading, error, data }) => {
   const classes = useStyles()
@@ -35,6 +36,7 @@ const DriverGrid = ({ loading, error, data }) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell />
             <StyledTableCell>Name</StyledTableCell>
             <StyledTableCell>Phone</StyledTableCell>
             <StyledTableCell>Truck #</StyledTableCell>
@@ -47,18 +49,19 @@ const DriverGrid = ({ loading, error, data }) => {
         </TableHead>
         <TableBody>
           {drivers.map(row => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.driver}
-              </StyledTableCell>
-              <StyledTableCell>{row.cell}</StyledTableCell>
-              <StyledTableCell>{row.truck}</StyledTableCell>
-              <StyledTableCell>{row.trailer}</StyledTableCell>
-              <StyledTableCell>{row.type}</StyledTableCell>
-              <StyledTableCell>{row.team}</StyledTableCell>
-              <StyledTableCell>{row.hazmat}</StyledTableCell>
-              <StyledTableCell>{row.tanker}</StyledTableCell>
-            </StyledTableRow>
+            <DriverRow key={row.id} {...row} />
+            // <StyledTableRow key={row.id}>
+            //   <StyledTableCell component="th" scope="row">
+            //     {row.driver}
+            //   </StyledTableCell>
+            //   <StyledTableCell>{row.cell}</StyledTableCell>
+            //   <StyledTableCell>{row.truck}</StyledTableCell>
+            //   <StyledTableCell>{row.trailer}</StyledTableCell>
+            //   <StyledTableCell>{row.type}</StyledTableCell>
+            //   <StyledTableCell>{row.team}</StyledTableCell>
+            //   <StyledTableCell>{row.hazmat}</StyledTableCell>
+            //   <StyledTableCell>{row.tanker}</StyledTableCell>
+            // </StyledTableRow>
           ))}
         </TableBody>
       </Table>

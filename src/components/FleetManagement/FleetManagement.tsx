@@ -10,7 +10,7 @@ const FleetManagement = props => {
 
   return (
     <div>
-      <Typography variant="h3" align="center">
+      <Typography variant="h4" align="center" className={classes.heading}>
         Fleet Management
       </Typography>
       <Container className={classes.root}>
@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
       margin: "auto",
+    },
+
+    heading: {
+      fontVariant: "small-caps",
     },
 
     search: {
