@@ -19,6 +19,7 @@ import {
 import { CheckBox, CheckBoxOutlineBlank } from "@material-ui/icons"
 import EditButton from "../../components/EditButton"
 import UpdateButton from "../../components/UpdateButton"
+import DeleteButton from "../../components/DeleteButton"
 import { Formik, Field } from "formik"
 import { useMutation, gql } from "@apollo/client"
 
@@ -27,12 +28,12 @@ const UPDATE_DRIVER = gql`
     $id: uuid!
     $driver: String!
     $cell: String!
-    $truck: String!
-    $trailer: String!
-    $type: Boolean!
+    $truck: Int!
+    $trailer: Int!
+    $type: String!
     $team: String!
-    $hazmat: String!
-    $tanker: String!
+    $hazmat: Boolean!
+    $tanker: Boolean!
   ) {
     update_fleet_table_by_pk(
       pk_columns: { id: $id }
@@ -84,8 +85,8 @@ const DriverRow = props => {
             id: values.id,
             driver: values.driver,
             cell: values.cell,
-            truck: values.truck,
-            trailer: values.trailer,
+            truck: parseInt(values.truck),
+            trailer: parseInt(values.trailer),
             type: values.type,
             team: values.team,
             hazmat: values.hazmat,
@@ -95,6 +96,7 @@ const DriverRow = props => {
       }}
     >
       {({ values, setFieldValue, handleSubmit }) => {
+        console.log(values)
         return (
           <StyledTableRow key={id}>
             {/* Enables Editing Mode for each row */}
@@ -178,6 +180,7 @@ const DriverRow = props => {
                 />
               )}
             </StyledTableCell>
+
             <StyledTableCell>
               {values.edit === false ? (
                 <Typography>{values.type}</Typography>
@@ -230,7 +233,6 @@ const DriverRow = props => {
               )}
             </StyledTableCell>
             <StyledTableCell>
-              {" "}
               {values.edit === false ? (
                 values.tanker === true ? (
                   <CheckBox color="secondary" />
@@ -242,9 +244,14 @@ const DriverRow = props => {
                   name="tanker"
                   as={Checkbox}
                   id={id}
-                  checked={values.hazmat}
+                  checked={values.tanker}
                 />
               )}
+            </StyledTableCell>
+            <StyledTableCell>
+              {values.edit === false ? (
+                <DeleteButton variant="outlined" size="small" click="" />
+              ) : null}
             </StyledTableCell>
           </StyledTableRow>
         )

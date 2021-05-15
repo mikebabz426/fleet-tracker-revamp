@@ -45,23 +45,12 @@ const DriverGrid = ({ loading, error, data }) => {
             <StyledTableCell>Team</StyledTableCell>
             <StyledTableCell>Hazmat</StyledTableCell>
             <StyledTableCell>Tanker</StyledTableCell>
+            <StyledTableCell />
           </TableRow>
         </TableHead>
         <TableBody>
           {drivers.map(row => (
             <DriverRow key={row.id} {...row} />
-            // <StyledTableRow key={row.id}>
-            //   <StyledTableCell component="th" scope="row">
-            //     {row.driver}
-            //   </StyledTableCell>
-            //   <StyledTableCell>{row.cell}</StyledTableCell>
-            //   <StyledTableCell>{row.truck}</StyledTableCell>
-            //   <StyledTableCell>{row.trailer}</StyledTableCell>
-            //   <StyledTableCell>{row.type}</StyledTableCell>
-            //   <StyledTableCell>{row.team}</StyledTableCell>
-            //   <StyledTableCell>{row.hazmat}</StyledTableCell>
-            //   <StyledTableCell>{row.tanker}</StyledTableCell>
-            // </StyledTableRow>
           ))}
         </TableBody>
       </Table>
