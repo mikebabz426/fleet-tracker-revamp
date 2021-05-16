@@ -31,42 +31,6 @@ interface Props {
   setSettings: () => void
 }
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    marginBottom: 100,
-  },
-  typographyStyles: {
-    color: "#fff",
-  },
-  toolbar: {
-    justifyContent: "space-between",
-    margin: "0 0",
-  },
-  box: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "0px 1rem",
-  },
-  button: {
-    margin: theme.spacing(1),
-    backgroundColor: "#fff",
-    "&:hover": {
-      backgroundColor: "#66bb6a",
-      color: "#fff",
-    },
-  },
-  fab: {
-    backgroundColor: "#fff",
-    color: "#66bb6a",
-    marginLeft: "1rem",
-    "&:hover": {
-      color: "#fff",
-      backgroundColor: "#66bb6a",
-    },
-  },
-}))
-
 const Header: React.FC<Props> = ({
   infoDisplay,
   margin,
@@ -137,17 +101,6 @@ const Header: React.FC<Props> = ({
                       options={dayOptions}
                       handler={e => handleChange(e, "day")}
                     />
-
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      color="secondary"
-                      className={classes.button}
-                      startIcon={newTruck ? <ArrowBackIcon /> : <AddIcon />}
-                      onClick={setNewTruck}
-                    >
-                      {newTruck ? "Back" : "Add Truck"}
-                    </Button>
                   </>
                 ) : null}
 
@@ -195,5 +148,43 @@ const Header: React.FC<Props> = ({
     </Container>
   )
 }
+
+//Custom Styles
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: 100,
+  },
+  typographyStyles: {
+    color: "#fff",
+  },
+  toolbar: {
+    justifyContent: "space-between",
+    margin: "0 0",
+  },
+  box: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0px 1rem",
+  },
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: "#fff",
+    "&:hover": {
+      backgroundColor: "#66bb6a",
+      color: "#fff",
+    },
+  },
+  fab: {
+    backgroundColor: "#fff",
+    color: "#66bb6a",
+    marginLeft: "1rem",
+    "&:hover": {
+      color: "#fff",
+      backgroundColor: "#66bb6a",
+    },
+  },
+}))
 
 export default Header

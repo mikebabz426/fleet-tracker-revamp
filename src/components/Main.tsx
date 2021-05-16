@@ -55,12 +55,7 @@ const Main: React.FC<Props> = ({}) => {
     <Grid container className={classes.container}>
       <Grid item xs={false} sm={false} />
       <Grid item xs={12} sm={12}>
-        {newTruck ? (
-          <AddTruckForm
-            newTruck={newTruck}
-            toggle={() => setNewTruck(!newTruck)}
-          />
-        ) : distro ? (
+        {distro ? (
           <Distro loading={loading} data={data} error={error} />
         ) : settings ? (
           <FleetManagement loading={loading} data={data} error={error} />

@@ -1,10 +1,15 @@
 import * as React from "react"
-import { Container, InputBase, Typography } from "@material-ui/core"
+import { Container, InputBase, Typography, Button } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+import AddIcon from "@material-ui/icons/Add"
 import SearchIcon from "@material-ui/icons/Search"
 import DriverGrid from "./DriverGrid"
+import AddTruckForm from "../NewTruckForm/AddTruckForm"
+import { useNewTruckContext } from "../../NewTruckContext"
 
 const FleetManagement = props => {
+  const { newTruck, setNewTruck } = useNewTruckContext()
   const classes = useStyles()
   const { loading, error, data } = props
 
@@ -14,25 +19,50 @@ const FleetManagement = props => {
         Fleet Management
       </Typography>
       <Container className={classes.root}>
-        <div style={{ display: "flex", margin: "1rem 0" }}>
-          <Typography variant="body1" align="center">
-            Search by truck number
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "1rem 0",
+          }}
+        >
+          <div>
+            <Typography variant="body1" align="center">
+              Search by truck number
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
           </div>
+          <Button
+            variant="outlined"
+            size="small"
+            color="secondary"
+            className={classes.button}
+            startIcon={newTruck ? <ArrowBackIcon /> : <AddIcon />}
+            onClick={() => setNewTruck(!newTruck)}
+          >
+            {newTruck ? "Back" : "Add Truck"}
+          </Button>
         </div>
-        <DriverGrid loading={loading} error={error} data={data} />
+        {newTruck ? (
+          <AddTruckForm
+            newTruck={newTruck}
+            toggle={() => setNewTruck(!newTruck)}
+          />
+        ) : (
+          <DriverGrid loading={loading} error={error} data={data} />
+        )}
       </Container>
     </div>
   )
@@ -49,7 +79,14 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
       margin: "auto",
     },
-
+    button: {
+      margin: theme.spacing(1),
+      backgroundColor: "#fff",
+      "&:hover": {
+        backgroundColor: "#66bb6a",
+        color: "#fff",
+      },
+    },
     heading: {
       fontVariant: "small-caps",
     },
