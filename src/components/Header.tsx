@@ -7,6 +7,7 @@ import {
   Typography,
   Container,
   Fab,
+  Button,
 } from "@material-ui/core"
 import { Link } from "gatsby"
 import { makeStyles } from "@material-ui/core/styles"
@@ -46,6 +47,14 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     margin: "0px 1rem",
+  },
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: "#fff",
+    "&:hover": {
+      backgroundColor: "#66bb6a",
+      color: "#fff",
+    },
   },
   fab: {
     backgroundColor: "#fff",
@@ -128,42 +137,45 @@ const Header: React.FC<Props> = ({
                       options={dayOptions}
                       handler={e => handleChange(e, "day")}
                     />
-                    <Typography>Add Truck: </Typography>
-                    <Fab
-                      onClick={setNewTruck}
-                      className={classes.fab}
+
+                    <Button
+                      variant="outlined"
                       size="small"
-                      color="primary"
-                      aria-label="add-truck"
+                      color="secondary"
+                      className={classes.button}
+                      startIcon={newTruck ? <ArrowBackIcon /> : <AddIcon />}
+                      onClick={setNewTruck}
                     >
-                      {newTruck ? <ArrowBackIcon /> : <AddIcon />}
-                    </Fab>
+                      {newTruck ? "Back" : "Add Truck"}
+                    </Button>
                   </>
                 ) : null}
 
                 <Box className={classes.box}>
-                  <Typography>New Truck List: </Typography>
-                  <Fab
-                    onClick={setDistro}
-                    className={classes.fab}
+                  <Button
+                    variant="outlined"
                     size="small"
-                    color="primary"
-                    aria-label="new-truck-list"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={distro ? <ArrowBackIcon /> : <ListAltIcon />}
+                    onClick={setDistro}
                   >
-                    {distro ? <ArrowBackIcon /> : <ListAltIcon />}
-                  </Fab>
+                    {distro ? "Back" : "New Truck List"}
+                  </Button>
                 </Box>
                 <Box className={classes.box}>
-                  <Typography>Fleet Management</Typography>
-                  <Fab
-                    onClick={setSettings}
-                    className={classes.fab}
+                  <Button
+                    variant="outlined"
                     size="small"
-                    color="primary"
-                    aria-label="fleet-management"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={
+                      settings ? <ArrowBackIcon /> : <LocalShippingIcon />
+                    }
+                    onClick={setSettings}
                   >
-                    {settings ? <ArrowBackIcon /> : <LocalShippingIcon />}
-                  </Fab>
+                    {settings ? "Back" : "Fleet Management"}
+                  </Button>
                 </Box>
               </Box>
             </>
