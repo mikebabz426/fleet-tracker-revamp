@@ -1,5 +1,11 @@
 import * as React from "react"
-import { Container, InputBase, Typography, Button } from "@material-ui/core"
+import {
+  Container,
+  InputBase,
+  Typography,
+  Button,
+  Box,
+} from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import AddIcon from "@material-ui/icons/Add"
@@ -15,35 +21,51 @@ const FleetManagement = props => {
 
   return (
     <div>
-      <Typography variant="h4" align="center" className={classes.heading}>
-        Fleet Management
-      </Typography>
+      {newTruck ? null : (
+        <Typography variant="h4" align="center" className={classes.heading}>
+          Fleet Management
+        </Typography>
+      )}
+
       <Container className={classes.root}>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            margin: "1rem 0",
+            margin: "1rem auto",
+            width: 1080,
           }}
         >
-          <div>
-            <Typography variant="body1" align="center">
-              Search by truck number
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+          <Box
+            style={{
+              display: "flex",
+            }}
+          >
+            <Box
+              style={{
+                display: "flex",
+                alignItems: "center",
+                visibility: newTruck ? "hidden" : "visible",
+              }}
+            >
+              <Typography variant="body1" align="center">
+                Search by truck number
+              </Typography>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
-          </div>
+            </Box>
+          </Box>
           <Button
             variant="outlined"
             size="small"

@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import Header from "./Header"
 import "@fontsource/roboto"
 import GlobalThemeProvider from "../GlobalThemeProvider"
-import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
 import { useSettingsContext } from "../SettingsContext"
 
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children, margin, headerInfo }) => {
-  const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro, setDistro } = useDistroContext()
   const { settings, setSettings } = useSettingsContext()
 
@@ -25,8 +23,6 @@ const Layout: React.FC<Props> = ({ children, margin, headerInfo }) => {
         <Header
           infoDisplay={headerInfo}
           margin={margin}
-          setNewTruck={() => setNewTruck(!newTruck)}
-          newTruck={newTruck}
           setDistro={() => setDistro(!distro)}
           distro={distro}
           settings={settings}

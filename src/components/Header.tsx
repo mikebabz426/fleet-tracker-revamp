@@ -6,7 +6,6 @@ import {
   Box,
   Typography,
   Container,
-  Fab,
   Button,
 } from "@material-ui/core"
 import { Link } from "gatsby"
@@ -15,16 +14,13 @@ import LogoutButton from "./LogoutButton"
 import { useAuth0 } from "@auth0/auth0-react"
 import { FilterContext } from "./../FilterContext"
 import Filter from "./Filters/Filter"
-import AddIcon from "@material-ui/icons/Add"
 import LocalShippingIcon from "@material-ui/icons/LocalShipping"
 import ListAltIcon from "@material-ui/icons/ListAlt"
-import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+import ViewListIcon from "@material-ui/icons/ViewList"
 
 interface Props {
   infoDisplay: boolean
   margin: boolean
-  setNewTruck: () => void
-  newTruck: boolean
   distro: boolean
   setDistro: () => void
   settings: boolean
@@ -34,8 +30,6 @@ interface Props {
 const Header: React.FC<Props> = ({
   infoDisplay,
   margin,
-  newTruck,
-  setNewTruck,
   distro,
   setDistro,
   settings,
@@ -87,22 +81,25 @@ const Header: React.FC<Props> = ({
               </Typography>
 
               <Box className={classes.box}>
-                {distro === false ? (
-                  <>
-                    <Typography>Team Filter: </Typography>
-                    <Filter
-                      label="Team"
-                      options={teamOptions}
-                      handler={e => handleChange(e, "team")}
-                    />
-                    <Typography>Day Filter: </Typography>
-                    <Filter
-                      label="Day"
-                      options={dayOptions}
-                      handler={e => handleChange(e, "day")}
-                    />
-                  </>
-                ) : null}
+                <Box
+                  className={classes.box}
+                  style={{
+                    visibility: distro || settings ? "hidden" : "visible",
+                  }}
+                >
+                  <Typography>Team Filter: </Typography>
+                  <Filter
+                    label="Team"
+                    options={teamOptions}
+                    handler={e => handleChange(e, "team")}
+                  />
+                  <Typography>Day Filter: </Typography>
+                  <Filter
+                    label="Day"
+                    options={dayOptions}
+                    handler={e => handleChange(e, "day")}
+                  />
+                </Box>
 
                 <Box className={classes.box}>
                   <Button
@@ -110,10 +107,10 @@ const Header: React.FC<Props> = ({
                     size="small"
                     color="secondary"
                     className={classes.button}
-                    startIcon={distro ? <ArrowBackIcon /> : <ListAltIcon />}
+                    startIcon={distro ? <ViewListIcon /> : <ListAltIcon />}
                     onClick={setDistro}
                   >
-                    {distro ? "Back" : "New Truck List"}
+                    {distro ? "Truck Board" : "New Truck List"}
                   </Button>
                 </Box>
                 <Box className={classes.box}>
@@ -123,11 +120,11 @@ const Header: React.FC<Props> = ({
                     color="secondary"
                     className={classes.button}
                     startIcon={
-                      settings ? <ArrowBackIcon /> : <LocalShippingIcon />
+                      settings ? <ViewListIcon /> : <LocalShippingIcon />
                     }
                     onClick={setSettings}
                   >
-                    {settings ? "Back" : "Fleet Management"}
+                    {settings ? "Truck Board" : "Fleet Management"}
                   </Button>
                 </Box>
               </Box>
