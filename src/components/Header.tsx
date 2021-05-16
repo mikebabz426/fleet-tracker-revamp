@@ -107,6 +107,7 @@ const Header: React.FC<Props> = ({
                     size="small"
                     color="secondary"
                     className={classes.button}
+                    disabled={settings ? true : false}
                     startIcon={distro ? <ViewListIcon /> : <ListAltIcon />}
                     onClick={setDistro}
                   >
@@ -119,6 +120,7 @@ const Header: React.FC<Props> = ({
                     size="small"
                     color="secondary"
                     className={classes.button}
+                    disabled={distro ? true : false}
                     startIcon={
                       settings ? <ViewListIcon /> : <LocalShippingIcon />
                     }
