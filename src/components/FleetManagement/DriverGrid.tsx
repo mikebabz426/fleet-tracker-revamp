@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core"
 import DriverRow from "./DriverRow"
 
-const DriverGrid = ({ loading, error, data }) => {
+const DriverGrid = ({ loading, error, data, search }) => {
   const classes = useStyles()
 
   if (loading)
@@ -49,9 +49,17 @@ const DriverGrid = ({ loading, error, data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {drivers.map(row => (
-            <DriverRow key={row.id} {...row} />
-          ))}
+          {drivers
+            .filter(driver => {
+              if (search === "") return true
+              if (search !== "" && parseInt(search) === driver.truck) {
+                return true
+              }
+              return false
+            })
+            .map(row => (
+              <DriverRow key={row.id} {...row} />
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

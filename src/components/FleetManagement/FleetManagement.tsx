@@ -15,9 +15,14 @@ import AddTruckForm from "../NewTruckForm/AddTruckForm"
 import { useNewTruckContext } from "../../NewTruckContext"
 
 const FleetManagement = props => {
+  const [search, setSearch] = React.useState("")
   const { newTruck, setNewTruck } = useNewTruckContext()
   const classes = useStyles()
   const { loading, error, data } = props
+
+  const handleChange = e => {
+    setSearch(e.target.value)
+  }
 
   return (
     <div>
@@ -61,6 +66,8 @@ const FleetManagement = props => {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
+                  value={search}
+                  onChange={handleChange}
                   inputProps={{ "aria-label": "search" }}
                 />
               </div>
@@ -83,7 +90,12 @@ const FleetManagement = props => {
             toggle={() => setNewTruck(!newTruck)}
           />
         ) : (
-          <DriverGrid loading={loading} error={error} data={data} />
+          <DriverGrid
+            loading={loading}
+            error={error}
+            data={data}
+            search={search}
+          />
         )}
       </Container>
     </div>
