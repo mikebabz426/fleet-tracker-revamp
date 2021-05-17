@@ -52,13 +52,15 @@ const Login = () => {
   return (
     <Container className={classes.container}>
       <Box className={classes.box}>
+        <Typography variant="h6" style={{ fontVariant: "small-caps" }}>
+          quote of the day:
+        </Typography>
         <Typography variant="h4" className={classes.subheading}>
-          Authorization has been disabled for demo purposes.
-          {/* "Roads? Where we're going, we dont need... roads."
+          "Quality means doing it right when no one is looking."
           <br></br>
           <span style={{ fontStyle: "italic", fontSize: "18px" }}>
-            -Emmett Lathrop "Doc" Brown, Ph. D.
-          </span> */}
+            -Henry Ford
+          </span>
         </Typography>
         <LoginButton />
       </Box>
