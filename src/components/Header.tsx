@@ -6,7 +6,7 @@ import {
   Box,
   Typography,
   Container,
-  Fab,
+  Button,
 } from "@material-ui/core"
 import { Link } from "gatsby"
 import { makeStyles } from "@material-ui/core/styles"
@@ -14,52 +14,26 @@ import LogoutButton from "./LogoutButton"
 import { useAuth0 } from "@auth0/auth0-react"
 import { FilterContext } from "./../FilterContext"
 import Filter from "./Filters/Filter"
-import AddIcon from "@material-ui/icons/Add"
+import LocalShippingIcon from "@material-ui/icons/LocalShipping"
 import ListAltIcon from "@material-ui/icons/ListAlt"
-import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+import ViewListIcon from "@material-ui/icons/ViewList"
 
 interface Props {
+  infoDisplay: boolean
   margin: boolean
-  setNewTruck: () => void
-  newTruck: boolean
   distro: boolean
   setDistro: () => void
+  settings: boolean
+  setSettings: () => void
 }
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    marginBottom: 100,
-  },
-  typographyStyles: {
-    color: "#fff",
-  },
-  toolbar: {
-    justifyContent: "space-between",
-    margin: "0 0",
-  },
-  box: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "0px 1rem",
-  },
-  fab: {
-    backgroundColor: "#fff",
-    color: "#66bb6a",
-    marginLeft: "1rem",
-    "&:hover": {
-      color: "#fff",
-      backgroundColor: "#66bb6a",
-    },
-  },
-}))
-
 const Header: React.FC<Props> = ({
+  infoDisplay,
   margin,
-  newTruck,
-  setNewTruck,
   distro,
   setDistro,
+  settings,
+  setSettings,
 }) => {
   const classes = useStyles()
   const { user, isAuthenticated } = useAuth0()
@@ -76,7 +50,7 @@ const Header: React.FC<Props> = ({
 
   const getFuelPrice = async () => {
     await fetch(
-      `https://api.eia.gov/series/?api_key=5c7387cb68efe9616f46194d17493e35&series_id=PET.EMD_EPD2D_PTE_NUS_DPG.W`
+      `https://api.eia.gov/series/?api_key=${process.env.EIA_API_KEY}&series_id=PET.EMD_EPD2D_PTE_NUS_DPG.W`
     )
       .then(res => res.json())
       .then(data => setFuelPrice(data.series[0].data[0][1]))
@@ -100,55 +74,64 @@ const Header: React.FC<Props> = ({
               My Fleet Tracker
             </Typography>
           </Link>
-          {isAuthenticated ? (
+          {infoDisplay && isAuthenticated && (
             <>
               <Typography className={classes.typographyStyles} variant="body2">
                 US Diesel Price Avg: ${fuelPrice} /G
               </Typography>
 
               <Box className={classes.box}>
-                {distro === false ? (
-                  <>
-                    <Typography>Team Filter: </Typography>
-                    <Filter
-                      label="Team"
-                      options={teamOptions}
-                      handler={e => handleChange(e, "team")}
-                    />
-                    <Typography>Day Filter: </Typography>
-                    <Filter
-                      label="Day"
-                      options={dayOptions}
-                      handler={e => handleChange(e, "day")}
-                    />
-                    <Typography>Add Truck: </Typography>
-                    <Fab
-                      onClick={setNewTruck}
-                      className={classes.fab}
-                      size="small"
-                      color="primary"
-                      aria-label="add"
-                    >
-                      {newTruck ? <ArrowBackIcon /> : <AddIcon />}
-                    </Fab>
-                  </>
-                ) : null}
+                <Box
+                  className={classes.box}
+                  style={{
+                    visibility: distro || settings ? "hidden" : "visible",
+                  }}
+                >
+                  <Typography>Team Filter: </Typography>
+                  <Filter
+                    label="Team"
+                    options={teamOptions}
+                    handler={e => handleChange(e, "team")}
+                  />
+                  <Typography>Day Filter: </Typography>
+                  <Filter
+                    label="Day"
+                    options={dayOptions}
+                    handler={e => handleChange(e, "day")}
+                  />
+                </Box>
 
                 <Box className={classes.box}>
-                  <Typography>New Truck List: </Typography>
-                  <Fab
-                    onClick={setDistro}
-                    className={classes.fab}
+                  <Button
+                    variant="outlined"
                     size="small"
-                    color="primary"
-                    aria-label="add"
+                    color="secondary"
+                    className={classes.button}
+                    disabled={settings ? true : false}
+                    startIcon={distro ? <ViewListIcon /> : <ListAltIcon />}
+                    onClick={setDistro}
                   >
-                    {distro ? <ArrowBackIcon /> : <ListAltIcon />}
-                  </Fab>
+                    {distro ? "Truck Board" : "New Truck List"}
+                  </Button>
+                </Box>
+                <Box className={classes.box}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="secondary"
+                    className={classes.button}
+                    disabled={distro ? true : false}
+                    startIcon={
+                      settings ? <ViewListIcon /> : <LocalShippingIcon />
+                    }
+                    onClick={setSettings}
+                  >
+                    {settings ? "Truck Board" : "Fleet Management"}
+                  </Button>
                 </Box>
               </Box>
             </>
-          ) : null}
+          )}
 
           <Box className={classes.box}>
             {isAuthenticated ? (
@@ -164,5 +147,43 @@ const Header: React.FC<Props> = ({
     </Container>
   )
 }
+
+//Custom Styles
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    marginBottom: 100,
+  },
+  typographyStyles: {
+    color: "#fff",
+  },
+  toolbar: {
+    justifyContent: "space-between",
+    margin: "0 0",
+  },
+  box: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0px 1rem",
+  },
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: "#fff",
+    "&:hover": {
+      backgroundColor: "#66bb6a",
+      color: "#fff",
+    },
+  },
+  fab: {
+    backgroundColor: "#fff",
+    color: "#66bb6a",
+    marginLeft: "1rem",
+    "&:hover": {
+      color: "#fff",
+      backgroundColor: "#66bb6a",
+    },
+  },
+}))
 
 export default Header

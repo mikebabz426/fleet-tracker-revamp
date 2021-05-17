@@ -98,7 +98,6 @@ const TruckRow = props => {
         edit: false,
       }}
       onSubmit={values => {
-        console.log(values)
         updateTruck({
           variables: {
             id: values.id,
@@ -123,6 +122,7 @@ const TruckRow = props => {
         return (
           <StyledTableRow key={id}>
             <StyledTableCell />
+            {/* Enable Editing Mode on the truck row */}
             <StyledTableCell>
               {values.edit === false ? (
                 <EditTwoTone

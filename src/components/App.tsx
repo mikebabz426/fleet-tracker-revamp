@@ -40,13 +40,12 @@ const App: React.FC<Props> = ({}) => {
 
   return (
     <>
-      {isAuthenticated && user.email === "ops@speedfreightinc.com" ? (
+      {isAuthenticated ? (
         <Main />
       ) : (
         <Box className={classes.messageBox}>
-          <Typography variant="h3" className={classes.message}>
-            If you are a member of Speed Freight Inc, please Log In with the
-            correct account!
+          <Typography variant="h6" className={classes.message}>
+            Please log in with a valid account!
           </Typography>
           <LoginButton />
         </Box>

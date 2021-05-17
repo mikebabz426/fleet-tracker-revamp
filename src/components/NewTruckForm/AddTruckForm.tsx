@@ -21,68 +21,6 @@ import { Formik, Form, Field, useField, FieldAttributes } from "formik"
 import * as Yup from "yup"
 import { gql, useMutation } from "@apollo/client"
 
-//Custom Styles
-
-const CustomInput = withStyles((theme: Theme) => ({
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.background.paper,
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    padding: "10px 26px 10px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: theme.palette.secondary,
-      boxShadow: `0 0 0 0.2rem rgba(102,187,106,.75)`,
-    },
-  },
-}))(InputBase)
-
-type MyRadioProps = { label: string } & FieldAttributes<{}>
-
-const CustomRadio: React.FC<MyRadioProps> = ({ label, ...props }) => {
-  const [field] = useField(props)
-  return <FormControlLabel {...field} control={<Radio />} label={label} />
-}
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 80,
-  },
-  container: {
-    backgroundColor: "#fff",
-    borderRadius: "3px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(4, 0, 2, 0),
-    backgroundColor: theme.palette.primary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-    marginBottom: "3rem",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  box: {
-    dispaly: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  divider: {
-    margin: 5,
-  },
-}))
-
 //GQL Mutation to add new truck to database
 
 const ADD_DRIVER = gql`
@@ -156,8 +94,8 @@ const AddTruckForm = props => {
           addDriver({
             variables: {
               driver: values.driverName,
-              truck: values.truckNumber,
-              trailer: values.trailerNumber,
+              truck: parseInt(values.truckNumber, 10),
+              trailer: parseInt(values.trailerNumber, 10),
               cell: values.phoneNumber,
               team: values.team,
               type: values.trailerType,
@@ -308,5 +246,67 @@ const AddTruckForm = props => {
 }
 
 //Custom Styling
+
+//Custom Styles
+
+const CustomInput = withStyles((theme: Theme) => ({
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.background.paper,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: theme.palette.secondary,
+      boxShadow: `0 0 0 0.2rem rgba(102,187,106,.75)`,
+    },
+  },
+}))(InputBase)
+
+type MyRadioProps = { label: string } & FieldAttributes<{}>
+
+const CustomRadio: React.FC<MyRadioProps> = ({ label, ...props }) => {
+  const [field] = useField(props)
+  return <FormControlLabel {...field} control={<Radio />} label={label} />
+}
+
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 80,
+  },
+  container: {
+    backgroundColor: "#fff",
+    borderRadius: "3px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(4, 0, 2, 0),
+    backgroundColor: theme.palette.primary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+    marginBottom: "3rem",
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  box: {
+    dispaly: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  divider: {
+    margin: 5,
+  },
+}))
 
 export default AddTruckForm

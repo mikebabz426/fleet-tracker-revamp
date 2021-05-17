@@ -6,7 +6,9 @@ import { gql, useSubscription } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
 import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
+import { useSettingsContext } from "../SettingsContext"
 import Distro from "./Distro/Distro"
+import FleetManagement from "../components/FleetManagement/FleetManagement"
 
 interface Props {
   children?: React.ReactNode
@@ -47,18 +49,16 @@ const Main: React.FC<Props> = ({}) => {
   const classes = useStyles()
   const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro } = useDistroContext()
+  const { settings } = useSettingsContext()
 
   return (
     <Grid container className={classes.container}>
       <Grid item xs={false} sm={false} />
       <Grid item xs={12} sm={12}>
-        {newTruck ? (
-          <AddTruckForm
-            newTruck={newTruck}
-            toggle={() => setNewTruck(!newTruck)}
-          />
-        ) : distro ? (
+        {distro ? (
           <Distro loading={loading} data={data} error={error} />
+        ) : settings ? (
+          <FleetManagement loading={loading} data={data} error={error} />
         ) : (
           <FleetTable loading={loading} data={data} error={error} />
         )}
