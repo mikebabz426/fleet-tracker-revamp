@@ -1,10 +1,8 @@
 import * as React from "react"
 import { Grid } from "@material-ui/core"
 import FleetTable from "./Table/FleetTable"
-import AddTruckForm from "./NewTruckForm/AddTruckForm"
 import { gql, useSubscription } from "@apollo/client"
 import { makeStyles } from "@material-ui/core/styles"
-import { useNewTruckContext } from "../NewTruckContext"
 import { useDistroContext } from "../DistroContext"
 import { useSettingsContext } from "../SettingsContext"
 import Distro from "./Distro/Distro"
@@ -47,7 +45,6 @@ const FLEET_ALL = gql`
 const Main: React.FC<Props> = ({}) => {
   const { loading, error, data } = useSubscription(FLEET_ALL)
   const classes = useStyles()
-  const { newTruck, setNewTruck } = useNewTruckContext()
   const { distro } = useDistroContext()
   const { settings } = useSettingsContext()
 
