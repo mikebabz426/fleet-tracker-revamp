@@ -165,6 +165,7 @@ const TruckRow = props => {
                     color="primary"
                     aria-label="Edit Driver Row"
                     component="span"
+                    size="small"
                   >
                     <EditTwoTone
                       className={classes.edit}
@@ -385,6 +386,7 @@ const TruckRow = props => {
                     color="primary"
                     aria-label="Copy Driver Info"
                     component="span"
+                    size="small"
                   >
                     <FileCopyIcon fontSize="small" />
                   </IconButton>
