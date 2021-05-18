@@ -23,12 +23,12 @@ const TableHeader = () => {
     <TableHead>
       <TableRow>
         <StyledTableCell />
-        <StyledTableCell />
+        <StyledTableCell>Edit</StyledTableCell>
 
         {headerNames.map(header => (
           <StyledTableCell key={header}>{header}</StyledTableCell>
         ))}
-        <StyledTableCell />
+        <StyledTableCell>Copy</StyledTableCell>
       </TableRow>
     </TableHead>
   )

@@ -82,10 +82,6 @@ const DriverRow = props => {
 
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
   const handleClose = () => {
     setOpen(false)
   }
@@ -318,13 +314,6 @@ const DriverRow = props => {
                     variant="outlined"
                     size="small"
                     click={() => setOpen(true)}
-                    // click={values => {
-                    //   deleteDriver({
-                    //     variables: {
-                    //       id: id,
-                    //     },
-                    //   })
-                    // }}
                   />
                 ) : null}
               </StyledTableCell>

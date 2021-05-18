@@ -1,4 +1,5 @@
 import * as React from "react"
+import { CopyToClipboard } from "react-copy-to-clipboard"
 import {
   Typography,
   TextField,
@@ -9,6 +10,8 @@ import {
   InputBase,
   FormControl,
   Checkbox,
+  Snackbar,
+  IconButton,
 } from "@material-ui/core"
 import {
   EditTwoTone,
@@ -16,12 +19,18 @@ import {
   CheckBox,
   CheckBoxOutlineBlank,
 } from "@material-ui/icons"
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert"
+import FileCopyIcon from "@material-ui/icons/FileCopy"
 import { withStyles, makeStyles } from "@material-ui/core/styles"
 import Haz from "../../assets/hazmat-icon.svg"
 import Tnkr from "../../assets/tanker-icon.svg"
 import { Formik, Field } from "formik"
 import { weekDays, states, truckStatus } from "./../../services/services"
 import { useMutation, gql } from "@apollo/client"
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const UPDATE_TRUCK = gql`
   mutation Update(
@@ -63,6 +72,19 @@ const UPDATE_TRUCK = gql`
 const TruckRow = props => {
   const classes = useStyles()
   const [updateTruck] = useMutation(UPDATE_TRUCK)
+  const [open, setOpen] = React.useState(false)
+
+  const handleClick = () => {
+    setOpen(true)
+  }
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
 
   const {
     id,
@@ -84,247 +106,295 @@ const TruckRow = props => {
   } = props
 
   return (
-    <Formik
-      initialValues={{
-        id: id,
-        day: day,
-        location: location,
-        usState: usState,
-        time: time,
-        appt: appt,
-        status: status,
-        needs: needs,
-        notes: notes,
-        edit: false,
-      }}
-      onSubmit={values => {
-        updateTruck({
-          variables: {
-            id: values.id,
-            day: values.day,
-            location: values.location,
-            usState: values.usState,
-            time: values.time,
-            appt: values.appt,
-            status: values.status,
-            needs: values.needs,
-            notes: values.notes,
-          },
-        })
-      }}
-    >
-      {({ values, setFieldValue, handleSubmit }) => {
-        let trailerClass
-        type === "53' Van"
-          ? (trailerClass = classes.van)
-          : (trailerClass = classes.reefer)
+    <>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Driver Info Copied!
+        </Alert>
+      </Snackbar>
 
-        return (
-          <StyledTableRow key={id}>
-            <StyledTableCell />
-            {/* Enable Editing Mode on the truck row */}
-            <StyledTableCell>
-              {values.edit === false ? (
-                <EditTwoTone
-                  className={classes.edit}
-                  color="primary"
-                  onClick={() => {
-                    setFieldValue("edit", true, false)
-                  }}
-                />
-              ) : (
-                <SaveRounded
-                  className={classes.edit}
-                  color="secondary"
-                  onClick={() => {
-                    handleSubmit()
-                    setFieldValue("edit", false, false)
-                  }}
-                />
-              )}
-            </StyledTableCell>
+      <Formik
+        initialValues={{
+          id: id,
+          day: day,
+          location: location,
+          usState: usState,
+          time: time,
+          appt: appt,
+          status: status,
+          needs: needs,
+          notes: notes,
+          edit: false,
+        }}
+        onSubmit={values => {
+          updateTruck({
+            variables: {
+              id: values.id,
+              day: values.day,
+              location: values.location,
+              usState: values.usState,
+              time: values.time,
+              appt: values.appt,
+              status: values.status,
+              needs: values.needs,
+              notes: values.notes,
+            },
+          })
+        }}
+      >
+        {({ values, setFieldValue, handleSubmit }) => {
+          let trailerClass
+          type === "53' Van"
+            ? (trailerClass = classes.van)
+            : (trailerClass = classes.reefer)
 
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.day}
-                </Typography>
-              ) : (
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <Field
-                    className={classes.selected}
-                    as={Select}
-                    name="day"
-                    variant="outlined"
-                    input={<CustomInput />}
+          const copyText = `
+          Driver Name: ${driver},
+          Truck: ${truck}, 
+          Trailer: ${trailer}, 
+          Phone: ${cell}
+          `
+
+          return (
+            <StyledTableRow key={id}>
+              <StyledTableCell />
+              {/* Enable Editing Mode on the truck row */}
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <IconButton
+                    color="primary"
+                    aria-label="Edit Driver Row"
+                    component="span"
                   >
-                    {weekDays.map(day => (
-                      <MenuItem
-                        className={classes.selected}
-                        value={day}
-                        key={day}
-                      >
-                        {day}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </FormControl>
-              )}
-            </StyledTableCell>
-            <StyledTableCell>{cell}</StyledTableCell>
-            <StyledTableCell>{driver}</StyledTableCell>
-            <StyledTableCell>{truck}</StyledTableCell>
-            <StyledTableCell>{trailer}</StyledTableCell>
-            <StyledTableCell>
-              {hazmat ? <Haz className={classes.icon} /> : null}
-              {tanker ? <Tnkr className={classes.icon} /> : null}
-            </StyledTableCell>
-            <StyledTableCell>
-              <Typography className={trailerClass}>{type}</Typography>
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.location}
-                </Typography>
-              ) : (
-                <Field
-                  name="location"
-                  type="input"
-                  size="small"
-                  color="secondary"
-                  variant="outlined"
-                  as={CustomLocationField}
-                />
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.usState}
-                </Typography>
-              ) : (
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <Field
-                    className={classes.selected}
-                    as={Select}
-                    name="usState"
-                    variant="outlined"
-                    input={<CustomInput />}
-                  >
-                    {states.map(st => (
-                      <MenuItem
-                        className={classes.selected}
-                        value={st}
-                        key={st}
-                      >
-                        {st}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </FormControl>
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.time}
-                </Typography>
-              ) : (
-                <Field
-                  name="time"
-                  type="input"
-                  size="small"
-                  color="secondary"
-                  className={classes.inputCenter}
-                  as={CustomField}
-                />
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                values.appt === true ? (
-                  <CheckBox color="secondary" />
+                    <EditTwoTone
+                      className={classes.edit}
+                      color="primary"
+                      onClick={() => {
+                        setFieldValue("edit", true, false)
+                      }}
+                      fontSize="small"
+                    />
+                  </IconButton>
                 ) : (
-                  <CheckBoxOutlineBlank color="secondary" />
-                )
-              ) : (
-                <Field
-                  name="appt"
-                  as={Checkbox}
-                  id={id}
-                  checked={values.appt}
-                />
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.status}
-                </Typography>
-              ) : (
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <Field
-                    className={classes.selected}
-                    as={Select}
-                    name="status"
-                    variant="outlined"
-                    input={<CustomInput />}
+                  <IconButton
+                    color="primary"
+                    aria-label="Edit Driver Row"
+                    component="span"
                   >
-                    {truckStatus.map(st => (
-                      <MenuItem
-                        className={classes.selected}
-                        value={st}
-                        key={st}
-                      >
-                        {st}
-                      </MenuItem>
-                    ))}
-                  </Field>
-                </FormControl>
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.needs}
-                </Typography>
-              ) : (
-                <Field
-                  name="needs"
-                  label="Needs"
-                  type="input"
-                  variant="outlined"
-                  size="small"
-                  color="secondary"
-                  className={classes.notes}
-                  as={TextField}
-                />
-              )}
-            </StyledTableCell>
-            <StyledTableCell>
-              {values.edit === false ? (
-                <Typography className={classes.typeStyle}>
-                  {values.notes}
-                </Typography>
-              ) : (
-                <Field
-                  name="notes"
-                  label="Notes"
-                  type="input"
-                  variant="outlined"
-                  size="small"
-                  color="secondary"
-                  className={classes.notes}
-                  as={TextField}
-                />
-              )}
-            </StyledTableCell>
-            <StyledTableCell />
-          </StyledTableRow>
-        )
-      }}
-    </Formik>
+                    <SaveRounded
+                      className={classes.edit}
+                      color="secondary"
+                      fontSize="small"
+                      onClick={() => {
+                        handleSubmit()
+                        setFieldValue("edit", false, false)
+                      }}
+                    />
+                  </IconButton>
+                )}
+              </StyledTableCell>
+
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.day}
+                  </Typography>
+                ) : (
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <Field
+                      className={classes.selected}
+                      as={Select}
+                      name="day"
+                      variant="outlined"
+                      input={<CustomInput />}
+                    >
+                      {weekDays.map(day => (
+                        <MenuItem
+                          className={classes.selected}
+                          value={day}
+                          key={day}
+                        >
+                          {day}
+                        </MenuItem>
+                      ))}
+                    </Field>
+                  </FormControl>
+                )}
+              </StyledTableCell>
+              <StyledTableCell>{cell}</StyledTableCell>
+              <StyledTableCell>{driver}</StyledTableCell>
+              <StyledTableCell>{truck}</StyledTableCell>
+              <StyledTableCell>{trailer}</StyledTableCell>
+              <StyledTableCell>
+                {hazmat ? <Haz className={classes.icon} /> : null}
+                {tanker ? <Tnkr className={classes.icon} /> : null}
+              </StyledTableCell>
+              <StyledTableCell>
+                <Typography className={trailerClass}>{type}</Typography>
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.location}
+                  </Typography>
+                ) : (
+                  <Field
+                    name="location"
+                    type="input"
+                    size="small"
+                    color="secondary"
+                    variant="outlined"
+                    as={CustomLocationField}
+                  />
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.usState}
+                  </Typography>
+                ) : (
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <Field
+                      className={classes.selected}
+                      as={Select}
+                      name="usState"
+                      variant="outlined"
+                      input={<CustomInput />}
+                    >
+                      {states.map(st => (
+                        <MenuItem
+                          className={classes.selected}
+                          value={st}
+                          key={st}
+                        >
+                          {st}
+                        </MenuItem>
+                      ))}
+                    </Field>
+                  </FormControl>
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.time}
+                  </Typography>
+                ) : (
+                  <Field
+                    name="time"
+                    type="input"
+                    size="small"
+                    color="secondary"
+                    className={classes.inputCenter}
+                    as={CustomField}
+                  />
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  values.appt === true ? (
+                    <CheckBox color="secondary" />
+                  ) : (
+                    <CheckBoxOutlineBlank color="secondary" />
+                  )
+                ) : (
+                  <Field
+                    name="appt"
+                    as={Checkbox}
+                    id={id}
+                    checked={values.appt}
+                  />
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.status}
+                  </Typography>
+                ) : (
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <Field
+                      className={classes.selected}
+                      as={Select}
+                      name="status"
+                      variant="outlined"
+                      input={<CustomInput />}
+                    >
+                      {truckStatus.map(st => (
+                        <MenuItem
+                          className={classes.selected}
+                          value={st}
+                          key={st}
+                        >
+                          {st}
+                        </MenuItem>
+                      ))}
+                    </Field>
+                  </FormControl>
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.needs}
+                  </Typography>
+                ) : (
+                  <Field
+                    name="needs"
+                    label="Needs"
+                    type="input"
+                    variant="outlined"
+                    size="small"
+                    color="secondary"
+                    className={classes.notes}
+                    as={TextField}
+                  />
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                {values.edit === false ? (
+                  <Typography className={classes.typeStyle}>
+                    {values.notes}
+                  </Typography>
+                ) : (
+                  <Field
+                    name="notes"
+                    label="Notes"
+                    type="input"
+                    variant="outlined"
+                    size="small"
+                    color="secondary"
+                    className={classes.notes}
+                    as={TextField}
+                  />
+                )}
+              </StyledTableCell>
+              <StyledTableCell>
+                <CopyToClipboard text={copyText} onCopy={handleClick}>
+                  <IconButton
+                    color="primary"
+                    aria-label="Copy Driver Info"
+                    component="span"
+                  >
+                    <FileCopyIcon fontSize="small" />
+                  </IconButton>
+                </CopyToClipboard>
+              </StyledTableCell>
+            </StyledTableRow>
+          )
+        }}
+      </Formik>
+    </>
   )
 }
 
