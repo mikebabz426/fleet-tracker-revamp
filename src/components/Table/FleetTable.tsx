@@ -11,6 +11,7 @@ import {
 import { FilterContext } from "../../FilterContext"
 import TableHeader from "./TableHeader"
 import TruckRow from "./TruckRow"
+import { sortByDay } from "../../services/sortHelpers"
 
 const FleetTable = props => {
   const [filters] = useContext(FilterContext)
@@ -37,6 +38,7 @@ const FleetTable = props => {
       if (filters.day === truck.day) return true
       return false
     })
+    .sort(sortByDay)
     .map(truck => {
       return <TruckRow key={truck.id} {...truck} />
     })

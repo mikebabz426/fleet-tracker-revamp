@@ -179,7 +179,7 @@ const TruckRow = props => {
                 ) : (
                   <IconButton
                     color="primary"
-                    aria-label="Edit Driver Row"
+                    aria-label="Update Driver Row"
                     component="span"
                   >
                     <SaveRounded
