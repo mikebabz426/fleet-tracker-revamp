@@ -52,15 +52,16 @@ const Login = () => {
   return (
     <Container className={classes.container}>
       <Box className={classes.box}>
-        <Typography variant="h6" style={{ fontVariant: "small-caps" }}>
+        {/* <Typography variant="h6" style={{ fontVariant: "small-caps" }}>
           quote of the day:
-        </Typography>
+        </Typography> */}
         <Typography variant="h4" className={classes.subheading}>
-          "Quality means doing it right when no one is looking."
+          {/* "Quality means doing it right when no one is looking." */}
+          Authorization has been disabled for demo purposes.
           <br></br>
-          <span style={{ fontStyle: "italic", fontSize: "18px" }}>
+          {/* <span style={{ fontStyle: "italic", fontSize: "18px" }}>
             -Henry Ford
-          </span>
+          </span> */}
         </Typography>
         <LoginButton />
       </Box>
